@@ -309,3 +309,25 @@ Your `ClosestDotSearchAgent` won't always find the shortest possible path throug
 ### Submission
 
 You're not done yet! Follow your instructor's guidelines to receive credit on your project!
+
+### Tips based on struggles of students past, ignore at your own peril...
+
+1) Make sure you understand how to implement each algorithm and plan it out in pseudocode first. DFS needs a stack; BFS needs a queue. You can put anything into the stack or queue, including a tuple containing a state, and a list of actions to reach that state from the start state. You also need a visited set so that you don't re-visit nodes you've already seen. Plan it all out in pseudocode first.
+
+2) Print things out. Before seeking debugging help, you need to be printing the values of all key variables. Unlike Java, Python does not enforce types at compile time, so it's really easy to make mistakes and put the wrong thing into a queue/stack, or to index incorrectly.
+If you aren't sure what is coming out of getSuccessors(), print it. 
+If you aren't sure what is in your stack/queue, print its contents every loop iteration. 
+If you want to know the start state or goal state or current state, print it. 
+Print your "visited" set as you search.
+
+PRO TIP: write a special function for debugging, so you can turn all your debug messages on/off with a single code change (True <--> False):
+
+```python
+def debug(msg): #use this instead of printing
+    if True: #set to False to turn off debugging
+         print(msg)
+    else:
+        pass
+ ```
+
+3) getSuccessors() DOES NOT RETURN A STATE. It returns a list of tuples, where each tuple contains (a state, a direction, and a cost). 
