@@ -52,7 +52,33 @@ class Babbler:
         if seed != None: #seed:  
             random.seed(seed)
 
-        # TODO: your code goes here
+        # Make some new data structures here; all the below examples are totally made-up
+
+        # need to store our sparce graph as a dictionary 
+        # need to store keys/states (as hashables, so strings or tuples, not list)
+        # need to store values (lists or bag)
+
+        # note that we need to be able to quickly find options for current state (so we use it for indexing, i.e. as our key)
+            # graph = {
+            #     "I think": ["therefore", this", "you", "you"],   #list of words that we've seen follow this key (preserving multiplicity)      
+            #     "think therefore: 0.5
+            # }
+        # state used as keys are strings with spaces between words; values are lists of words that could follow the keys.
+        # value list can have repeated entries to preserve probability
+
+        # the above dictionary can get space-inefficient (storing copies), but is time efficient; you could instead do something like:
+            # graph = {
+            #     "": {"I think":2, "I believe":1},
+            #     "I think": {"therefore": 1, "this":1, "you":1},
+            #     "think therefore": {"I": 1}
+            # }
+
+        # need to track starting states (list or bag)
+        # while we could have starting states inside our dictionary (as "": ["I think","I think","I believe"]), the values would have to be states instead of single words
+        # this would break how we handle going from current state to next (last word of current state + next word); list/bag is simpler
+            # starters = ["I think","I think","I believe"]
+        # need to track ending states
+            # starters = ["I think","I think","I believe"]
     
     
     def add_file(self, filename): #already written; no need to change
