@@ -5,9 +5,9 @@ import sys
 """
 Markov Babbler
 
-After being trained on text from various authors, can
-'babble', or generate random walks, and produce text that
-vaguely sounds like the author.
+After being trained on text from various authors, it can
+'babble' (generate random walks) and produce text that
+vaguely sounds like the author of the training texts.
 """
 
 class Babbler:
@@ -24,25 +24,25 @@ class Babbler:
     
     def add_sentence(self, sentence):
         """
-        Process the given sentence.
-        The sentence is a string separated by spaces. Break it into
-        words using split(). Convert each word to lowercase using lower().
+        Process the given sentence (a string separated by spaces): 
+        Break the sentence into words using split(). 
+        Convert each word to lowercase using lower().
         Then start processing n-grams and updating your states.
-        Remember to track starters (i.e. n-grams that being sentences),
-        stoppers (i.e. n-grams that end a sentence), and that
-        any n-grams that stops a sentence should be followed by the
-        special symbol 'EOL' in the state transition table. 'EOL' is short
-        for 'end of line', and since it is capitalized and all of the
-        text from the book is lower-case, it will be unambiguous.
+        Remember to track starters (n-grams that begin sentences),
+        stoppers (n-grams that end sentences), 
+        and that any n-grams that stops a sentence should be followed by the
+        special symbol 'EOL' in the state transition table. 
+        'EOL' is short for 'end of line'; since it is capitalized and all our input texts are lower-case, 
+        it will be unambiguous.
         """
         pass
 
     
     def add_file(self, filename):
         """
-        This method done for you. It just calls your add_sentence() method
-        for each line of an input file. We are assuming that the input data
-        has already been pre-processed so that each sentence is on a separate line.
+        This method is already done for you. 
+        It calls the add_sentence() method for each line of an input file after making it lower case.
+        We are assuming input data has already been pre-processed so that each sentence is on a separate line.
         """
         for line in [line.rstrip().lower() for line in open(filename, errors='ignore').readlines()]:
             self.add_sentence(line)
@@ -145,7 +145,7 @@ def main(n=3, filename='tests/test1.txt', num_sentences=5):
     Simple test driver.
     """
     
-    print(filename)
+    print('Currently running on ',filename)
     babbler = Babbler(n)
     babbler.add_file(filename)
         
@@ -157,11 +157,14 @@ def main(n=3, filename='tests/test1.txt', num_sentences=5):
 
 
 if __name__ == '__main__':
-    # remove the first parameter, which should be babbler.py, the name of the script
-    sys.argv.pop(0)
+    print("arguments ",sys.argv)
+    sys.argv.pop(0) # remove the first parameter, which should be babbler.py, the name of the script
+
+    # default values 
     n = 3
     filename = 'tests/test1.txt'
     num_sentences = 5
+
     if len(sys.argv) > 0:
         n = int(sys.argv.pop(0))
     if len(sys.argv) > 0:
