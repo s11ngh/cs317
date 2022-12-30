@@ -5,40 +5,57 @@ import sys
 """
 Markov Babbler
 
-After being trained on text from various authors, it can
+After being trained on text from various authors, it will
 'babble' (generate random walks) and produce text that
 vaguely sounds like the author of the training texts.
 """
 
+# ------------------- Implementation Details: -------------------------------
+# Our entire graph is a dictionary
+#   - keys/states are ngrams represented as string or tuple, NOT a list 
+#   (because we need to use states as dictionary keys, and lists are not hashable)
+#   - values are either lists or Bags
+# Starter states can be a list of states or a Bag
+# When we pick a word, we transition to a new state
+# e.g. suppose we are using bigrams and are at the state ‘the dog’ and we pick the word ‘runs’. 
+# Our new state is ‘dog runs’, so we look up that state in our dictionary, and then get the next word, and so on…
+# Ending states can generate a special "stop" symbol; we will use ‘EOL’.
+#   If we generate the word ‘EOL’, then the sentence is over.
+#   Since all words are lower-case, this won’t be confused for a legitimate word
+
+# --------------------- Tasks --------------------------------
+# class Babbler:
+
+#    def __init__(self, n, seed=None): <---- consider what data structures you may need to create here
+
+#    def add_file(self, filename): <---- already completed for you; calls add_sentence(), so do that next
+#    def add_sentence(self, sentence): <---- your first port of call; read the comments and plan out your steps
+#   
+#    def get_starters(self):
+#    def get_stoppers(self):
+#    def get_successors(self, ngram):
+#    def get_all_ngrams(self):
+#    def has_successor(self, ngram):
+#    def get_random_successor(self, ngram):
+#
+#    def babble(self):
+
+
 class Babbler:
+    
     def __init__(self, n, seed=None):
         """
-        n is the length of an n-gram for state.
-        seed is the seed for a random number generation. If none given use the default.
+        n: length of an n-gram for state
+        seed: seed for a random number generation (None by default)
         """
-        self.n = n
-        if seed != None:
+        self.n = n 
+        if seed != None: #seed:  
             random.seed(seed)
+
         # TODO: your code goes here
     
     
-    def add_sentence(self, sentence):
-        """
-        Process the given sentence (a string separated by spaces): 
-        Break the sentence into words using split(). 
-        Convert each word to lowercase using lower().
-        Then start processing n-grams and updating your states.
-        Remember to track starters (n-grams that begin sentences),
-        stoppers (n-grams that end sentences), 
-        and that any n-grams that stops a sentence should be followed by the
-        special symbol 'EOL' in the state transition table. 
-        'EOL' is short for 'end of line'; since it is capitalized and all our input texts are lower-case, 
-        it will be unambiguous.
-        """
-        pass
-
-    
-    def add_file(self, filename):
+    def add_file(self, filename): #already written; no need to change
         """
         This method is already done for you. 
         It calls the add_sentence() method for each line of an input file after making it lower case.
@@ -47,6 +64,19 @@ class Babbler:
         for line in [line.rstrip().lower() for line in open(filename, errors='ignore').readlines()]:
             self.add_sentence(line)
     
+
+    def add_sentence(self, sentence):
+        """
+        Process the given sentence (a string separated by spaces): 
+        Break the sentence into words using split(); 
+        Convert each word to lowercase using lower().
+        Then start processing n-grams and updating your states.
+        Remember to track starters (n-grams that begin sentences), stoppers (n-grams that end sentences), 
+        and that any n-grams that stops a sentence should be followed by the
+        special symbol 'EOL' in the state transition table. 'EOL' is short for 'end of line'; since it is capitalized and all our input texts are lower-case, it will be unambiguous.
+        """
+        pass
+
 
     def get_starters(self):
         """
@@ -155,20 +185,20 @@ def main(n=3, filename='tests/test1.txt', num_sentences=5):
     for _ in range(num_sentences):
         print(babbler.babble())
 
-
-if __name__ == '__main__':
-    print("arguments ",sys.argv)
+# to execute this script, in your terminal, enter: python3 babbler.py
+# you can optionally provide up to 3 arguments: (n, filename, num_sentences)
+if __name__ == '__main__': 
+    print("Entered arguments: ",sys.argv)
     sys.argv.pop(0) # remove the first parameter, which should be babbler.py, the name of the script
-
-    # default values 
+    # -------default values -----------
     n = 3
     filename = 'tests/test1.txt'
     num_sentences = 5
-
-    if len(sys.argv) > 0:
+    #----------------------------------
+    if len(sys.argv) > 0: # if any argumetns are passed, first is assumed to be n
         n = int(sys.argv.pop(0))
-    if len(sys.argv) > 0:
+    if len(sys.argv) > 0: # if any more were passed, the next is assumed to be the filename
         filename = sys.argv.pop(0)
-    if len(sys.argv) > 0:
+    if len(sys.argv) > 0: # if any more were passed, the next is assumed to be number of sentences to be generated 
         num_sentences = int(sys.argv.pop(0))
-    main(n, filename, num_sentences)
+    main(n, filename, num_sentences) # now we call main with all the actual or default arguments
