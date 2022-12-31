@@ -11,8 +11,8 @@ Version 1.1
 
 ### Table of Contents
 
-- [Introduction](#intro)
-- [Problem Representation](#representation)
+- [Introduction](#Introduction)
+- [Problem Representation](#Problem-Representation)
     + [Example Learning Set](#Example-Learning-Set)
     + [Example Bubbler brain for a Unigram Model](#Example-Bubbler-brain-for-a-Unigram-Model)
     + [Example Bubbler brain for a Bigram Model](#Example-Bubbler-brain-for-a-Bigram-Model)
