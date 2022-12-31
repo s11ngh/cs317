@@ -14,8 +14,8 @@ Version 1.1
 - [Introduction](#Introduction)
 - [Problem Representation](#Problem-Representation)
     + [Example Learning Set](#Example-Learning-Set)
-    + [Example Bubbler brain for a Unigram Model](#Example-Bubbler-brain-for-a-Unigram-Model)
-    + [Example Bubbler brain for a Bigram Model](#Example-Bubbler-brain-for-a-Bigram-Model)
+    + [Example Babbler brain for a Unigram Model](#Example-Babbler-brain-for-a-Unigram-Model)
+    + [Example Babbler brain for a Bigram Model](#Example-Babbler-brain-for-a-Bigram-Model)
 - [Babbling Process](#Babbling-Process)
 - [Code](#Code)
 - [Books](#Books)
@@ -57,7 +57,7 @@ Consider the following pseudo-sentences we will learn from:  [`tests/test1.txt`]
     x y z a b c !
     x y z z a b c ?
 
-#### Example Bubbler brain for a Unigram Model 
+#### Example Babbler brain for a Unigram Model 
 
 If we convert this to a unigram model (probability of each word is independent of any preceding words; it only depends on the fraction of time this word appears among all the words in the training text), we get the following state diagram:
 
