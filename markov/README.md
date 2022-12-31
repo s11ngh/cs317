@@ -11,12 +11,12 @@ Version 1.1
 
 ### Table of Contents
 
-- [Introduction](#Introduction)
-- [Problem Representation](#Problem%20Representation)
-    + [Example Learning Set](#Example%20Learning%20Set)
-    + [Example Bubbler brain for a Unigram Model](#Example%20Bubbler%20brain%20for%20a%20Unigram%20Model)
-    + [Example Bubbler brain for a Bigram Model](#Example%20Bubbler%20brain%20for%20a%20Bigram%20Model)
-- [Babbling Process](#Babbling%20Process)
+- [Introduction](#intro)
+- [Problem Representation](#representation)
+    + [Example Learning Set](#Example-Learning-Set)
+    + [Example Bubbler brain for a Unigram Model](#Example-Bubbler-brain-for-a-Unigram-Model)
+    + [Example Bubbler brain for a Bigram Model](#Example-Bubbler-brain-for-a-Bigram-Model)
+- [Babbling Process](#Babbling-Process)
 - [Code](#Code)
 - [Books](#Books)
 - [Submission](#Submission)
@@ -46,7 +46,7 @@ To transition from a given state/key:
 - choose successor word from values list (random index in list)
 - nextState = (remove first word from current state string) and (append successor word)
 
-#### Example Learning Set ####
+#### Example Learning Set 
 
 Consider the following pseudo-sentences we will learn from:  [`tests/test1.txt`](tests/test1.txt).
 
@@ -57,7 +57,7 @@ Consider the following pseudo-sentences we will learn from:  [`tests/test1.txt`]
     x y z a b c !
     x y z z a b c ?
 
-#### Example Bubbler brain for a Unigram Model ####
+#### Example Bubbler brain for a Unigram Model 
 
 If we convert this to a unigram model (probability of each word is independent of any preceding words; it only depends on the fraction of time this word appears among all the words in the training text), we get the following state diagram:
 
@@ -90,7 +90,7 @@ Our starter an stopper states are:
     
 Given a total of 6 input sentences to train on, adding each first word to starters and each last word to stoppers, we end up with 6 starters and 6 stoppers. 
 
-#### Example Babbler brain for a Bigram Model ####
+#### Example Babbler brain for a Bigram Model 
 
 If we look at bigrams (approximates the probability of a word by using only the conditional probability of one preceding word), we get:
 
