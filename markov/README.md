@@ -149,7 +149,7 @@ _sentence_ becomes 'a b c'
 our _state_ 'a b' will become 'b' (also removing the newly-leading space)
 after adding the _successor_ word, our current _state_ will become 'b c' (also add a space before the successor)
  
- **Step 5) Repeat from step 2.    **
+ **Step 5) Repeat from step 2.**
 
 ### Code
 
