@@ -4,16 +4,22 @@ Project 0: Markov Babbler
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/Andrej_Markov.jpg" width="160" alt="Picture of Russian mathematician Andrey Markov, creator of Markov Chains"> Andrey Markov (Андре́й Ма́рков, 1856-1922), for whom [Markov Chains](https://en.wikipedia.org/wiki/Markov_chain) and Markov Processes are named.
 
 
-Version 1.000
+Version 1.1
 
 
 * * *
 
 ### Table of Contents
 
-*   [Introduction](#Introduction)
-*   [Code](#Code)
-*   [Books](#Books)
+- [Introduction](#Introduction)
+- [Problem Representation](#Problem%20Representation)
+    + [Example Learning Set](#Example%20Learning%20Set)
+    + [Example Bubbler brain for a Unigram Model](#Example%20Bubbler%20brain%20for%20a%20Unigram%20Model)
+    + [Example Bubbler brain for a Bigram Model](#Example%20Bubbler%20brain%20for%20a%20Bigram%20Model)
+- [Babbling Process](#Babbling%20Process)
+- [Code](#Code)
+- [Books](#Books)
+- [Submission](#Submission)
 
 ### Introduction
 
@@ -174,9 +180,7 @@ Optionally, you can provide up to 3 arguments (input file, size of n-gram, numbe
 
     python babbler.py tests/test2.txt 2 10
 
-There are unit test cases for the file [`tests/test1.txt`](tests/test1.txt) in [`test_markov.py`](test_markov.py).
- [`babbler.py`](babbler.py) main() is hard-coded to use this test file as `filename`.
-
+There are unit test cases for the file [`tests/test1.txt`](tests/test1.txt) in [`test_markov.py`](test_markov.py).   
 Once your basic implementation of the methods in [`babbler.py`](babbler.py) is working, you should pass these test cases.
 
 ### Books
@@ -186,4 +190,6 @@ Train your babbler on one or more of these texts, and produce some interesting s
 Make sure that none of your interesting sentences are identical to sentences that occur in the training text. Your program must be generating unique new sentences, not randomly picking complete sentences from the training text.
 
 ### Submission
-Submit your most interesting 5 sentences from the longer texts, along with the code for babbler.py
+Submit (on Google Classroom):
+- the babbler.py file with your code
+- your most interesting 5 sentences from the longer texts
