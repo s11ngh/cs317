@@ -149,11 +149,15 @@ Implement the depth-first search (DFS) algorithm in the `depthFirstSearch` funct
 
 Your code should quickly find a solution for:
 
-    python pacman.py -l tinyMaze -p SearchAgent
-
-    python pacman.py -l mediumMaze -p SearchAgent
-
-    python pacman.py -l bigMaze -z .5 -p SearchAgent
+```
+python pacman.py -l tinyMaze -p SearchAgent
+```
+```
+python pacman.py -l mediumMaze -p SearchAgent
+```
+```
+python pacman.py -l bigMaze -z .5 -p SearchAgent
+```
 
 The Pacman board will show an overlay of the states explored, and the order in which they were explored (brighter red means earlier exploration). Is the exploration order what you would have expected? Does Pacman actually go to all the explored squares on his way to the goal?
 
@@ -169,9 +173,12 @@ _Testing_: run the below command to see if your implementation passes all the au
 
 Implement the breadth-first search (BFS) algorithm in the `breadthFirstSearch` function in `search.py`. Again, write a graph search algorithm that avoids expanding any already visited states. Test your code the same way you did for depth-first search.
 
-    python pacman.py -l mediumMaze -p SearchAgent -a fn=bfs
-
-    python pacman.py -l bigMaze -p SearchAgent -a fn=bfs -z .5
+```
+python pacman.py -l mediumMaze -p SearchAgent -a fn=bfs
+```
+```
+python pacman.py -l bigMaze -p SearchAgent -a fn=bfs -z .5
+```
 
 Does BFS find a least cost solution? If not, check your implementation.
 
@@ -195,11 +202,15 @@ By changing the cost function, we can encourage Pacman to find different paths. 
 
 Implement the uniform-cost graph search algorithm in the `uniformCostSearch` function in `search.py`. We encourage you to look through `util.py` for some data structures that may be useful in your implementation. You should now observe successful behavior in all three of the following layouts, where the agents below are all UCS agents that differ only in the cost function they use (the agents and cost functions are written for you):
 
-    python pacman.py -l mediumMaze -p SearchAgent -a fn=ucs
-
-    python pacman.py -l mediumDottedMaze -p StayEastSearchAgent
-
-    python pacman.py -l mediumScaryMaze -p StayWestSearchAgent
+```
+python pacman.py -l mediumMaze -p SearchAgent -a fn=ucs
+```
+```
+python pacman.py -l mediumDottedMaze -p StayEastSearchAgent
+```
+```
+python pacman.py -l mediumScaryMaze -p StayWestSearchAgent
+```
 
 _Note:_ You should get very low and very high path costs for the `StayEastSearchAgent` and `StayWestSearchAgent` respectively, due to their exponential cost functions (see `searchAgents.py` for details).
 
@@ -235,9 +246,12 @@ _Note: Make sure to complete Question 2 before working on Question 5, because Qu
 
 Implement the `CornersProblem` search problem in [`searchAgents.py`](searchAgents.py). You will need to choose a state representation that encodes all the information necessary to detect whether all four corners have been reached. Now, your search agent should solve:
 
-    python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
-
-    python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+```
+python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+```
+```
+python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+```
 
 To receive full credit, you need to define an abstract state representation that _does not_ encode irrelevant information (like the position of ghosts, where extra food is, etc.). In particular, do not use a Pacman `GameState` as a search state. Your code will be very, very slow if you do (and also wrong).
 
