@@ -9,9 +9,9 @@ Version 1.001. Last Updated: 08/26/2014.
 
 # Table of Contents
 
-*   [Introduction](Introduction)
-*   [Welcome to Pacman](Welcome-to-pacman)
-*   [New Syntax: Type Hints](New-Syntax-Type-Hints)
+*   [Introduction](#Introduction)
+*   [Welcome to Pacman](#Welcome-to-pacman)
+*   [New Syntax: Type Hints](#New-Syntax-Type-Hints)
 *   [Q1 (3 pts): Finding a Fixed Food Dot using Depth First Search](#Q1-3-pts-Finding-a-Fixed-Food-Dot-using-Depth-First-Search)
 *   [Q2 (3 pts): Breadth First Search](#Q2-3-pts-Breadth-First-Search)
 *   [Q3 (3 pts): Varying the Cost Function](#Q3-3-pts-Varying-the-Cost-Function)
