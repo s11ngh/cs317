@@ -17,7 +17,7 @@ Version 1.001. Last Updated: 08/26/2014.
 *   [Q4 (3 pts): A* search](#Q4-3-pts-A-search)
 *   [Q5 (3 pts): Finding All the Corners](#Q5-3-pts-Finding-All-the-Corners)
 *   [Q6 (3 pts): Corners Problem: Heuristic](#Q6-3-pts-Corners-Problem-Heuristic)
-*   [Q7 (4 pts): Eating All The Dots](#Q7-3-pts-Eating-All-The-Dots)
+*   [Q7 (4 pts): Eating All The Dots](#Q7-4-pts-Eating-All-The-Dots)
 *   [Q8 (3 pts): Suboptimal Search](#Q8-3-pts-Suboptimal-Search)
 
 * * *
