@@ -114,7 +114,7 @@ def setModuleName(module, filename):
         elif type(o) == classType:
             setattr(o, '__file__', filename)
             # TODO: assign member __file__'s?
-        #print i, type(o)
+        #print(i, type(o))
 
 
 #from cStringIO import StringIO
@@ -126,7 +126,7 @@ def loadModuleString(moduleSource):
     #f = StringIO(moduleCodeDict[k])
     #tmp = imp.load_module(k, f, k, (".py", "r", imp.PY_SOURCE))
     tmp = imp.new_module(k)
-    exec(eoduleCodeDict[k] in tmp.__dict__)
+    exec(moduleCodeDict[k] in tmp.__dict__)
     setModuleName(tmp, k)
     return tmp
 
@@ -327,11 +327,10 @@ def getDisplay(graphicsByDefault, options=None):
     return textDisplay.NullGraphics()
 
 
-def run(args):
-    main(args.split()[1:])
 
-def main(argv):
-    options = readCommand(argv)
+
+if __name__ == '__main__':
+    options = readCommand(sys.argv)
     if options.generateSolutions:
         confirmGenerate()
     codePaths = options.studentCode.split(',')
@@ -357,6 +356,3 @@ def main(argv):
             gsOutput=options.gsOutput,
             edxOutput=options.edxOutput, muteOutput=options.muteOutput, printTestCase=options.printTestCase,
             questionToGrade=options.gradeQuestion, display=getDisplay(options.gradeQuestion!=None, options))
-
-if __name__ == '__main__':
-    main(sys.argv)

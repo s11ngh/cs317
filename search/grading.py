@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -14,12 +14,10 @@
 
 "Common code for autograders"
 
-import html
+from html import escape
 import time
-import sys
 import json
 import traceback
-import pdb
 from collections import defaultdict
 import util
 
@@ -45,7 +43,7 @@ class Grades:
     self.mute = muteOutput
     self.prereqs = defaultdict(set)
 
-    #print 'Autograder transcript for %s' % self.project
+    #print('Autograder transcript for %s' % self.project)
     print('Starting on %d-%d at %d:%02d:%02d' % self.start)
 
   def addPrereq(self, question, prereq):
@@ -61,13 +59,13 @@ class Grades:
     for q in self.questions:
       print('\nQuestion %s' % q)
       print('=' * (9 + len(q)))
-      print()
+      print
       self.currentQuestion = q
 
       incompleted = self.prereqs[q].difference(completedQuestions)
       if len(incompleted) > 0:
           prereq = incompleted.pop()
-          print(\
+          print(
 """*** NOTE: Make sure to complete Question %s before working on Question %s,
 *** because Question %s builds upon your answer for Question %s.
 """ % (prereq, q, q, prereq))
@@ -144,7 +142,7 @@ to follow your instructor's guidelines to receive credit on your project.
   def addExceptionMessage(self, q, inst, traceback):
     """
     Method to format the exception message, this is more complicated because
-    we need to cgi.escape the traceback but wrap the exception in a <pre> tag
+    we need to escape the traceback but wrap the exception in a <pre> tag
     """
     self.fail('FAIL: Exception raised: %s' % inst)
     self.addMessage('')
@@ -256,8 +254,8 @@ to follow your instructor's guidelines to receive credit on your project.
         checkOrX = checkOrX,
         points = self.points[q]
       )
-      # print "*** output for Question %s " % q[1]
-      # print output
+      # print("*** output for Question %s " % q[1])
+      # print(output)
       edxOutput.write(output)
     edxOutput.write("</div>")
     edxOutput.close()
@@ -291,14 +289,14 @@ to follow your instructor's guidelines to receive credit on your project.
         if self.mute: util.unmutePrint()
         print('*** ' + message)
         if self.mute: util.mutePrint()
-        message = html.escape(message)
+        message = escape(message)
     self.messages[self.currentQuestion].append(message)
 
   def addMessageToEmail(self, message):
     print("WARNING**** addMessageToEmail is deprecated %s" % message)
     for line in message.split('\n'):
       pass
-      #print '%%% ' + line + ' %%%'
+      #print('%%% ' + line + ' %%%')
       #self.messages[self.currentQuestion].append(line)
 
 
@@ -320,4 +318,3 @@ class Counter(dict):
     Returns the sum of counts for all keys.
     """
     return sum(self.values())
-
