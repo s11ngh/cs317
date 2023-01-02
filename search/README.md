@@ -129,7 +129,7 @@ Also, all of the commands that appear in this project also appear in `commands.t
 
 # Q1 (3 pts): Finding a Fixed Food Dot using Depth First Search
 
-In `searchAgents.py`, you'll find a fully implemented `SearchAgent`, which plans out a path through Pacman's world and then executes that path step-by-step. The search algorithms for formulating a plan are not implemented -- that's your job. As you work through the following questions, you might find it useful to refer to the object glossary (the second to last tab in the navigation bar above).
+In `searchAgents.py`, you'll find a fully implemented `SearchAgent`, which plans out a path through Pacman's world and then executes that path step-by-step. The search algorithms for formulating a plan are not implemented -- that's your job. 
 
 First, test that the `SearchAgent` is working correctly by running:
 
