@@ -1,16 +1,16 @@
 Python3 port of [Berkeley AI Pacman Search](http://ai.berkeley.edu)
 
-Project 1: Search
+# Project 1: Search
 -----------------
 
 Version 1.001. Last Updated: 08/26/2014.
 
 * * *
 
-### Table of Contents
+# Table of Contents
 
 *   [Introduction](#Introduction)
-*   [Welcome](#Welcome)
+*   [Welcome to Pacman](#Welcome-to-pacman)
 *   [Q1: Depth First Search](#Q1)
 *   [Q2: Breadth First Search](#Q2)
 *   [Q3: Uniform Cost Search](#Q3)
@@ -28,7 +28,7 @@ Version 1.001. Last Updated: 08/26/2014.
 > Mazes give Pacman the blues,  
 > So teach him to search.
 
-### Introduction
+# Introduction
 
 In this project, your Pacman agent will find paths through his maze world, both to reach a particular location and to collect food efficiently. You will build general search algorithms and apply them to Pacman scenarios.
 
@@ -38,25 +38,29 @@ This project includes an autograder for you to grade your answers on your machin
 
 The code for this project consists of several Python files, some of which you will need to read and understand in order to complete the assignment, and some of which you can ignore.
 
-**Files you'll edit and submit:**
+## **Files you'll edit and submit:**
 
 [`search.py`](search.py)  Where all of your search algorithms will reside.
 
 [`searchAgents.py`](searchAgents.py)   Where all of your search-based agents will reside.
 
-**Helpful file for running code (might edit, won't submit):**
+You will fill in portions of [`search.py`](http://ai.berkeley.edu/projects/release/search/v1/001/docs/search.html) and [`searchAgents.py`](http://ai.berkeley.edu/projects/release/search/v1/001/docs/searchAgents.html) during the assignment. You should submit these files with your code and comments. Please _do not_ change the other files in this distribution or submit any of our original files other than these files.
+
+## **Helpful file for running code (might edit, won't submit):**
 
 [`run.py`](run.py)   Use this file to run any commands in this readme. Look at the examples and make modifications as necessary. This file is helpful if you are not running from the command line, but you need to pass command line arguments to the code.
 
-**Files you might want to look at:**
+## **Files you might want to look at:**
 
 [`pacman.py`](pacman.py)   The main file that runs Pacman games. This file describes a Pacman GameState type, which you use in this project.
+
+[`pacmanAgents.py`](pacmanAgents.py)   Contains some pre-written basic agents.
 
 [`game.py`](game.py)   The logic behind how the Pacman world works. This file describes several supporting types like AgentState, Agent, Direction, and Grid.
 
 [`util.py`](util.py)   Useful data structures for implementing search algorithms.
 
-**Supporting files you can ignore:**
+## **Supporting files you can ignore:**
 
 [`graphicsDisplay.py`](graphicsDisplay.py)   Graphics for Pacman
 
@@ -80,20 +84,22 @@ The code for this project consists of several Python files, some of which you wi
 
 [`searchTestClasses.py`](searchTestClasses.py)   Project 1 specific autograding test classes
 
-**Files to Edit and Submit:** You will fill in portions of [`search.py`](http://ai.berkeley.edu/projects/release/search/v1/001/docs/search.html) and [`searchAgents.py`](http://ai.berkeley.edu/projects/release/search/v1/001/docs/searchAgents.html) during the assignment. You should submit these files with your code and comments. Please _do not_ change the other files in this distribution or submit any of our original files other than these files.
 
-**Evaluation:** Your code will be autograded for technical correctness. Please _do not_ change the names of any provided functions or classes within the code, or you will wreak havoc on the autograder. However, the correctness of your implementation -- not the autograder's judgements -- will be the final judge of your score. If necessary, we will review and grade assignments individually to ensure that you receive due credit for your work.
+## **Evaluation:** 
+Your code will be autograded for technical correctness. Please _do not_ change the names of any provided functions or classes within the code, or you will wreak havoc on the autograder. However, the correctness of your implementation -- not the autograder's judgements -- will be the final judge of your score. If necessary, we will review and grade assignments individually to ensure that you receive due credit for your work.
 
-**Academic Dishonesty:** We will be checking your code against other submissions in the class for logical redundancy. If you copy someone else's code and submit it with minor changes, we will know. These cheat detectors are quite hard to fool, so please don't try. We trust you all to submit your own work only; _please_ don't let us down.
+## **Academic Dishonesty:** 
+We will be checking your code against other submissions in the class for logical redundancy. If you copy someone else's code and submit it with minor changes, we will know. These cheat detectors are quite hard to fool, so please don't try. We trust you all to submit your own work only; _please_ don't let us down.
 
-**Getting Help:** You are not alone! If you find yourself stuck on something, contact the course staff for help. Office hours, open lab, Red Room, and the discussion Google Group forum are there for your support; please use them. If you can't make our office hours, let us know and we will schedule more. We want these projects to be rewarding and instructional, not frustrating and demoralizing. But, we don't know when or how to help unless you ask.
+## **Getting Help:** 
+You are not alone! If you find yourself stuck on something, contact the course staff for help. Office hours, open lab, Red Room, and the class Slack channel are there for your support; please use them. If you can't make our office hours, let us know and we will schedule more. We want these projects to be rewarding and instructional, not frustrating and demoralizing. But, we don't know when or how to help unless you ask.
 
-**Discussion:** Please be careful not to post spoilers! If you fork this repo,
-*make the repo private*.
+## **Discussion:** 
+Please be careful not to post spoilers! If you fork this repo, **make your fork private**.
 
 * * *
 
-### <a name="Welcome"></a> Welcome to Pacman 
+# Welcome to Pacman 
 
 After downloading+unzipping the code or cloning the repo, you should be able to play a game of Pacman by typing the following at the command line:
 
@@ -101,7 +107,7 @@ After downloading+unzipping the code or cloning the repo, you should be able to 
 
 Pacman lives in a shiny blue world of twisting corridors and tasty round treats. Navigating this world efficiently will be Pacman's first step in mastering his domain.
 
-The simplest agent in `searchAgents.py` is called the `GoWestAgent`, which always goes West (a trivial reflex agent). This agent can occasionally win:
+The simplest agent in `pacmanAgents.py` is called the `GoWestAgent`, which always goes West (a trivial reflex agent); review the code for the `class GoWestAgent(Agent)`. This agent can occasionally win:
 
     python pacman.py --layout testMaze --pacman GoWestAgent
 
@@ -117,13 +123,11 @@ Note that `pacman.py` supports a number of options that can each be expressed in
 
     python pacman.py -h
 
-Also, all of the commands that appear in this project also appear in `commands.txt`, for easy copying and pasting. In UNIX/Mac OS X, you can even run all these commands in order with `bash commands.txt`.
-
-Note: if you get error messages regarding Tkinter, see [this page](http://tkinter.unpythonic.net/wiki/How_to_install_Tkinter).
+Also, all of the commands that appear in this project also appear in `commands.txt`, for easy copying and pasting. In UNIX/Mac OS X or a bash terminal in Windows (such as in VSCode), you can even run all these commands in order with `bash commands.txt`.
 
 * * *
 
-### <a name="Q1">Question 1 (3 points): Finding a Fixed Food Dot using Depth First Search</a>
+# Question 1 (3 points): Finding a Fixed Food Dot using Depth First Search</a>
 
 In `searchAgents.py`, you'll find a fully implemented `SearchAgent`, which plans out a path through Pacman's world and then executes that path step-by-step. The search algorithms for formulating a plan are not implemented -- that's your job. As you work through the following questions, you might find it useful to refer to the object glossary (the second to last tab in the navigation bar above).
 
@@ -157,7 +161,7 @@ _Hint:_ If you use a `Stack` as your data structure, the solution found by your 
 
 * * *
 
-### <a name="Q2"></a>Question 2 (3 points): Breadth First Search
+# Question 2 (3 points): Breadth First Search
 
 Implement the breadth-first search (BFS) algorithm in the `breadthFirstSearch` function in `search.py`. Again, write a graph search algorithm that avoids expanding any already visited states. Test your code the same way you did for depth-first search.
 
@@ -175,7 +179,7 @@ _Note:_ If you've written your search code generically, your code should work eq
 
 * * *
 
-### <a name="Q3"></a>Question 3 (3 points): Varying the Cost Function
+# Question 3 (3 points): Varying the Cost Function
 
 While BFS will find a fewest-actions path to the goal, we might want to find paths that are "best" in other senses. Consider `mediumDottedMaze` and `mediumScaryMaze`.
 
@@ -193,7 +197,7 @@ _Note:_ You should get very low and very high path costs for the `StayEastSearch
 
 * * *
 
-### <a name="Q4"></a>Question 4 (3 points): A\* search
+# Question 4 (3 points): A\* search
 
 Implement A\* graph search in the empty function `aStarSearch` in `search.py`. A\* takes a heuristic function as an argument. Heuristics take two arguments: a state in the search problem (the main argument), and the problem itself (for reference information). The `nullHeuristic` heuristic function in `search.py` is a trivial example.
 
@@ -205,7 +209,7 @@ You should see that A\* finds the optimal solution slightly faster than uniform 
 
 * * *
 
-### <a name="Q5"></a>Question 5 (3 points): Finding All the Corners
+### Question 5 (3 points): Finding All the Corners
 
 The real power of A\* will only be apparent with a more challenging search problem. Now, it's time to formulate a new problem and design a heuristic for it.
 
@@ -227,7 +231,7 @@ Our implementation of `breadthFirstSearch` expands just under 2000 search nodes 
 
 * * *
 
-### <a name="Q6"></a>Question 6 (3 points): Corners Problem: Heuristic
+# Question 6 (3 points): Corners Problem: Heuristic
 
 _Note: Make sure to complete Question 4 before working on Question 6, because Question 6 builds upon your answer for Question 4._
 
@@ -260,7 +264,7 @@ _Remember:_ If your heuristic is inconsistent, you will receive _no_ credit, so 
 
 * * *
 
-### <a name="Q7"></a> Question 7 (4 points): Eating All The Dots
+# Question 7 (4 points): Eating All The Dots
 
 Now we'll solve a hard search problem: eating all the Pacman food in as few steps as possible. For this, we'll need a new search problem definition which formalizes the food-clearing problem: `FoodSearchProblem` in `searchAgents.py` (implemented for you). A solution is defined to be a path that collects all of the food in the Pacman world. For the present project, solutions do not take into account any ghosts or power pellets; solutions only depend on the placement of walls, regular food and Pacman. (Of course ghosts can ruin the execution of a solution! We'll get to that in the next project.) If you have written your general search methods correctly, `A*` with a null heuristic (equivalent to uniform-cost search) should quickly find an optimal solution to `testSearch` with no code change on your part (total cost of 7).
 
@@ -292,7 +296,7 @@ _Remember:_ If your heuristic is inconsistent, you will receive _no_ credit, so 
 
 * * *
 
-### <a name="Q8"></a> Question 8 (3 points): Suboptimal Search
+# Question 8 (3 points): Suboptimal Search
 
 Sometimes, even with A\* and a good heuristic, finding the optimal path through all the dots is hard. In these cases, we'd still like to find a reasonably good path, quickly. In this section, you'll write an agent that always greedily eats the closest dot. `ClosestDotSearchAgent` is implemented for you in `searchAgents.py`, but it's missing a key function that finds a path to the closest dot.
 
@@ -306,7 +310,7 @@ Your `ClosestDotSearchAgent` won't always find the shortest possible path throug
 
 * * *
 
-### Tips based on struggles of students past, ignore at your own peril...
+# Tips based on struggles of students past, ignore at your own peril...
 
 1) Make sure you understand how to implement each algorithm and plan it out in pseudocode first. DFS needs a stack; BFS needs a queue. You can put anything into the stack or queue, including a tuple containing a state, and a list of actions to reach that state from the start state. You also need a *visited* set so that you don't re-visit nodes you've already seen. Plan it all out in pseudocode first.
 
@@ -330,6 +334,6 @@ def debug(msg): #use this instead of printing
 
 * * *
 
-### Submission
+# Submission
 
 Submit (on Google Classroom) 
