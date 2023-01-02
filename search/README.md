@@ -14,7 +14,7 @@ Version 1.001. Last Updated: 08/26/2014.
 *   [Q1 (3 pts): Finding a Fixed Food Dot using Depth First Search](#Q1-3-pts-Finding-a-Fixed-Food-Dot-using-Depth-First-Search)
 *   [Q2 (3 pts): Breadth First Search](#Q2-3-pts-Breadth-First-Search)
 *   [Q3 (3 pts): Varying the Cost Function](#Q3-3-pts-Varying-the-Cost-Function)
-*   [Q4 (3 pts): A* search](#Q4-3-pts-A*-search)
+*   [Q4 (3 pts): A* search](#Q4-3-pts-A-search)
 *   [Q5 (3 pts): Finding All the Corners](#Q5-3-pts-Finding-All-the-Corners)
 *   [Q6 (3 pts): Corners Problem: Heuristic](#Q6-3-pts-Corners-Problem-Heuristic)
 *   [Q7 (4 pts): Eating All The Dots](#Q7-3-pts-Eating-All-The-Dots)
@@ -225,7 +225,7 @@ _Testing_: run the below command to see if your implementation passes all the au
 
 * * *
 
-### Q5 (3 pts): Finding All the Corners
+# Q5 (3 pts): Finding All the Corners
 
 The real power of A\* will only be apparent with a more challenging search problem. Now, it's time to formulate a new problem and design a heuristic for it.
 
