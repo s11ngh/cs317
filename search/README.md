@@ -11,6 +11,7 @@ Version 1.001. Last Updated: 08/26/2014.
 
 *   [Introduction](Introduction)
 *   [Welcome to Pacman](Welcome-to-pacman)
+*   [New Syntax: Type Hints](New-Syntax-Type-Hints)
 *   [Q1 (3 pts): Finding a Fixed Food Dot using Depth First Search](#Q1-3-pts-Finding-a-Fixed-Food-Dot-using-Depth-First-Search)
 *   [Q2 (3 pts): Breadth First Search](#Q2-3-pts-Breadth-First-Search)
 *   [Q3 (3 pts): Varying the Cost Function](#Q3-3-pts-Varying-the-Cost-Function)
@@ -124,6 +125,26 @@ Note that `pacman.py` supports a number of options that can each be expressed in
     python pacman.py -h
 
 Also, all of the commands that appear in this project also appear in `commands.txt`, for easy copying and pasting. In UNIX/Mac OS X or a bash terminal in Windows (such as in VSCode), you can even run all these commands in order with `bash commands.txt`.
+
+* * *
+
+# New Syntax: Type Hints
+
+You may not have seen this syntax before:
+
+```python
+def my_function(a: int, b: Tuple[int, int], c: List[List], d: Any, e: float=1.0):
+```
+
+This is annotating the type of the arguments that Python should expect for this function (a.k.a. **type hints**). For the example above, a should be an int – integer, b should be a tuple of 2 ints, c should be a List of Lists of anything – therefore a 2D array of anything, d is essentially the same as not annotated and can by anything, and e should be a float; e is also set to 1.0 if nothing is passed in for it, e.g.:
+
+```python
+my_function(1, (2, 3), [['a', 'b'], [None, my_class], [[]]], ('h', 1))
+```
+
+The above call fits the type annotations, and doesn’t pass anything in for e. Type annotations are meant to be an adddition to the docstrings to help you know what the functions are working with. Python itself doesn’t enforce these. When writing your own functions, it is up to you if you want to annotate your types; they may be helpful to keep organized or not something you want to spend time on.
+
+_Note_: you can see more examples of type hint here: [Type hints cheat sheet](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html)
 
 * * *
 
