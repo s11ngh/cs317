@@ -216,6 +216,16 @@ _Hint:_ The solution found by your DFS algorithm for `mediumMaze` should have a 
 _Testing_: run the below command to see if your implementation passes all the autograder test cases:
 
     python autograder.py -q q1
+    
+**_Important Note:_** the autograder looks at `expanded_states`, i.e. nodes on which we called getSuccessors(). In the top comment inside `depthFirstSearch(problem: SearchProblem)` in `search.py`, the suggestion is for you to begin working on the code by trying out some prints:  
+
+```python
+print("Start:", problem.getStartState())  
+print("Is the start a goal?", problem.isGoalState(problem.getStartState()))  
+print("Start's successors:", problem.**getSuccessors**(problem.getStartState()))  # <------- BREAKS AUTOGRADER! COMMENT IT OUT ZOMG!
+```
+
+While these are indeed useful, **COMMENT OUT THE LAST ONE BEFORE USING THE AUTOGRADER!** Otherwise the expanded nodes list will contain the start node twice, messing up autograding of all your hard work!
 
 * * *
 
