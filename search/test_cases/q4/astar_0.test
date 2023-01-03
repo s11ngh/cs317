@@ -7,7 +7,7 @@ diagram: """
           | 2
      2    V   4 
 *A <----> B -----> [H]
-          | 
+          | 1
      1.5  V  2.5
  G <----- D -----> E
           |
@@ -15,7 +15,7 @@ diagram: """
           V
          [F]
 
-A is the start state, F and H is the goal.  Arrows mark possible state 
+A is the start state, F and H is the goal (but they are not equidistant).  Arrows mark possible state 
 transitions.  The number next to the arrow is the cost of that transition.
 """
 # The following section specifies the search problem and the solution.
