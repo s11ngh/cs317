@@ -180,8 +180,12 @@ Optionally, you can provide up to 3 arguments (size of n-gram, input file, numbe
 
     python babbler.py 2 tests/test2.txt 10
 
+### Testing with autograder
+
 There are unit test cases for the file [`tests/test1.txt`](tests/test1.txt) in [`test_markov.py`](test_markov.py).   
-Once your basic implementation of the methods in [`babbler.py`](babbler.py) is working, you should pass these test cases.
+Once your basic implementation of the methods in [`babbler.py`](babbler.py) is working, you should pass these test cases:
+
+    python test_markov.py
 
 ### Books
 
