@@ -172,13 +172,13 @@ You can run our Markov Babbler using:
     python babbler.py
     
 By default, it will use:  
-- [`tests/test1.txt`](tests/test1.txt) as input file for learning  
-- n-grams of size 3  
+- n-grams of size 3 
+- [`tests/test1.txt`](tests/test1.txt) as input file for learning   
 - and will generate 5 output sentences  
     
-Optionally, you can provide up to 3 arguments (input file, size of n-gram, number of output sentences): 
+Optionally, you can provide up to 3 arguments (size of n-gram, input file, number of output sentences): 
 
-    python babbler.py tests/test2.txt 2 10
+    python babbler.py 2 tests/test2.txt 10
 
 There are unit test cases for the file [`tests/test1.txt`](tests/test1.txt) in [`test_markov.py`](test_markov.py).   
 Once your basic implementation of the methods in [`babbler.py`](babbler.py) is working, you should pass these test cases.
