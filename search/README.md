@@ -293,31 +293,64 @@ You should see that A\* finds the optimal solution slightly faster than uniform 
 _Testing_: run the below command to see if your implementation passes all the autograder test cases:
 
     python autograder.py -q q4
+    
+_Note_: The real power of A\* will only be apparent with a more challenging search problem, which we will define in Q5.
 
 * * *
 
 # Q5 (3 pts): Finding All the Corners
 
-The real power of A\* will only be apparent with a more challenging search problem. Now, it's time to formulate a new problem and design a heuristic for it.
-
-In _corner mazes_, there are four dots, one in each corner. Our new search problem is to find the shortest path through the maze that touches all four corners (whether the maze actually has food there or not). Note that for some mazes like `tinyCorners`, the shortest path does not always go to the closest food first! _Hint_: the shortest path through `tinyCorners` takes 28 steps.
-
 _Note: Make sure to complete Question 2 before working on Question 5, because Question 5 builds upon your answer for Question 2._
 
-Implement the `CornersProblem` search problem in [`searchAgents.py`](searchAgents.py). You will need to choose a state representation that encodes all the information necessary to detect whether all four corners have been reached. Now, your search agent should solve:
+In _corner mazes_ problem there are four dots, one in each corner. Our new search task is to find the shortest path through the maze that touches all four corners (regardless of whether the maze actually has food there). 
+
+Implement the `class CornersProblem` search problem in [`searchAgents.py`](searchAgents.py). We will test it using our BFS, but **you should not need to change your BFS implementation**, as it uses a generic notion of "state". You will, however, need to rethink what this state represents. Consider that BFS searches for a single goal, not four. This goal is now reaching all four courners. Consider that before, we could view state as just the agent's location; now we still need to know the location to move, but also the progress toward our overall goal. 
+
+To receive full credit, you need to define a state representation that _does not_ encode irrelevant information (like the position of ghosts, where extra food is, etc.). In particular, do not use a Pacman `GameState` as a search state. Your code will be very, very slow if you do (and also wrong). The only parts of the game state you need to reference in your state implementation are Pacman's position and the reached or unreached subgoals/corners (specifics of how you encode and track these is up to you).
+
+_Hint:_ If you need your states to be hashable (for example, if you are using a dictionary to keep track of visited states), you state must be an immutable type.
+
+Now, your search agent should solve the tinyCorners map (you can see the other maps in the `layouts` folder), with agent starting at position (4,5):
+> ![](https://drive.google.com/file/d/1kC8iMNKC1EpGTPpKj8bfsL6e0faQ3_0o/view?usp=sharing)
+
+Run the following command to test BFS solving the tinyCorners layout:
 
 ```
 python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
 ```
+
+Note that for some mazes like `tinyCorners`, the shortest path does not always go to the closest food first! 
+
+The shortest path through `tinyCorners` takes 28 steps. Expected output:
+```
+Path found with total cost of 28 in 0.0 seconds
+Search nodes expanded: 269
+Pacman emerges victorious! Score: 512
+Average Score: 512.0
+Scores:        512.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+```
+
+You can then try a larger layout:
 ```
 python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
 ```
 
-To receive full credit, you need to define an abstract state representation that _does not_ encode irrelevant information (like the position of ghosts, where extra food is, etc.). In particular, do not use a Pacman `GameState` as a search state. Your code will be very, very slow if you do (and also wrong).
+Expected output:
+```
+Path found with total cost of 106 in 0.0 seconds
+Search nodes expanded: 1988
+Pacman emerges victorious! Score: 434
+Average Score: 434.0
+Scores:        434.0
+Win Rate:      1/1 (1.00)
+Record:        Win
+```
 
-_Hint 1:_ The only parts of the game state you need to reference in your implementation are the starting Pacman position and the location of the four corners.
-
-_Hint 2:_ Our implementation of `breadthFirstSearch` expands just under 2000 search nodes on `mediumCorners`. However, heuristics (used with A\* search) can reduce the amount of searching required.
+_Note that we are using the following options:_
+- option '-p' to select an agent (such as SearchAgent, StayEastSearchAgent, StayWestSearchAgent)
+- option '-a' to pass in arguments (search function such as fn=bfs or fn=dfs and problem type such as prob=CornersProblem or prob=FoodSearchProblem)
 
 _Testing_: run the below command to see if your implementation passes all the autograder test cases:
 
