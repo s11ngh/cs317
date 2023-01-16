@@ -310,15 +310,13 @@ To receive full credit, you need to define a state representation that _does not
 
 _Hint:_ If you need your states to be hashable (for example, if you are using a dictionary to keep track of visited states), you state must be an immutable type.
 
-Now, your search agent should solve the tinyCorners map (you can see the other maps in the `layouts` folder), with agent starting at position (4,5):
-> ![](https://drive.google.com/file/d/1kC8iMNKC1EpGTPpKj8bfsL6e0faQ3_0o/view?usp=sharing)
+Now, your search agent should be able to solve the tinyCorners map, with agent starting at position (4,5) (you can see the other maps in the `layouts` folder):  
+![Tiny Corners Layout](tinyCorners_searchQ5.png)
 
 Run the following command to test BFS solving the tinyCorners layout:
-
 ```
 python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
 ```
-
 Note that for some mazes like `tinyCorners`, the shortest path does not always go to the closest food first! 
 
 The shortest path through `tinyCorners` takes 28 steps. Expected output:
