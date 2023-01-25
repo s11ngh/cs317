@@ -421,6 +421,9 @@ Any non-trivial non-negative consistent heuristic will receive 1 point. Make sur
 | at most 9,000            	| 4/4               	|
 | at most 7,000            	| 5/4 (bonus point) 	|
 
+You may use ```mazeDistance(point1: Tuple[int, int], point2: Tuple[int, int], gameState: pacman.GameState) -> int:```
+, which returns the maze distance between any two points, using your previously iplemented bfs. 
+
 _Remember:_ If your heuristic is inconsistent, you will receive _no_ credit, so be careful! Can you solve `mediumSearch` in a short time? If so, we're either very, very impressed, or your heuristic is inconsistent.
 
 _Testing_: run the below command to see if your implementation passes all the autograder test cases:
