@@ -3,7 +3,7 @@ Python3 port of [Berkeley AI Pacman Search](http://ai.berkeley.edu)
 # Project 1: Search
 -----------------
 
-Version 1.001. Last Updated: 08/26/2014.
+Version 1.004. Last Updated by Berkeley in Fall 2022 (Kazakova's edits from Winter 2022).
 
 * * *
 
