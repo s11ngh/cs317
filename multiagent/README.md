@@ -117,7 +117,11 @@ Inspect its code (in `multiAgents.py`) and make sure you understand what it's do
 
 ### Q1 (4 pts): Reflex Agent
 
-Improve the `ReflexAgent` in `multiAgents.py` to play respectably. The provided reflex agent code provides some helpful examples of methods that query the `GameState` for information. A capable reflex agent will have to consider both food locations and ghost locations to perform well. Your agent should easily and reliably clear the `testClassic` layout:
+Improve the `ReflexAgent` in `multiAgents.py` to play respectably. The provided reflex agent code provides some helpful examples of methods that query the `GameState` for information. You are welcome to change the code in any way you see fit, so long as you don't touch our method headers. 
+
+A reflex agent chooses an action at each choice point by examining its alternatives via a state evaluation function. A capable reflex agent will have to consider both food locations and ghost locations to perform well. Your job is to come up with some heuristic for pacman will decide what to do/approach/avoid each timestep. That are countless way to set this up, so get creative, but don't spend too much time on this question, as the majority of the project lies ahead.
+
+Your modified reflex agent should easily and reliably clear the `testClassic` layout:
 
     python pacman.py -p ReflexAgent -l testClassic
 
@@ -143,8 +147,6 @@ To run it without graphics, use:
 
     python autograder.py -q q1 --no-graphics
 
-Don't spend too much time on this question, though, as the majority of the project lies ahead.
-
 * * *
 
 ### Q2 (5 pts): Minimax
@@ -153,7 +155,10 @@ Now you will write an adversarial search agent in the provided `MinimaxAgent` cl
 
 Your code should also expand the game tree to an arbitrary depth. Score the leaves of your minimax tree with the supplied `self.evaluationFunction`, which defaults to `scoreEvaluationFunction`. `MinimaxAgent` extends `MultiAgentSearchAgent`, which gives access to `self.depth` and `self.evaluationFunction`. Make sure your minimax code makes reference to these two variables where appropriate as these variables are populated in response to command line options.
 
-_Important:_ A single search ply is considered to be one Pacman move and all the ghosts' responses, so depth 2 search will involve Pacman and each ghost moving two times.
+_Important:_ A single search ply is considered to be one Pacman move and all the ghosts' responses, so depth 2 search will involve Pacman and each ghost moving two times. The last agent in the last ply still needs to perform its minmaxing, by using the state values of its successor states. If a state has no successors, then we will use its own state value. State values are determined by the provided `self.evaluationFunction(someGameState)`.
+
+_Implementation:_ Use the code provided in lecture for inspiration (meaning we are using a recursive DFS to explore our minimax tree; we don't need to build/use an actual tree structure), but alter it to accomodate multiple ghost/min-agent layers for each pacman/max-agent layer. You may want to use get_action as a wrapper function for your minimax.
+> ![](minimaxSlides.png)
 
 _Grading_: We will be checking your code to determine whether it explores the correct number of game states. This is the only way reliable way to detect some very subtle bugs in implementations of minimax. As a result, the autograder will be _very_ picky about how many times you call `GameState.generateSuccessor`. If you call it any more or less than necessary, the autograder will complain. To test and debug your code, run
 
@@ -162,7 +167,7 @@ _Grading_: We will be checking your code to determine whether it explores the co
 This will show what your algorithm does on a number of small trees, as well as a pacman game. To run it without graphics, use:
 
     python autograder.py -q q2 --no-graphics
-
+    
 _**Hints and Observations**_
 
 *   The correct implementation of minimax will lead to Pacman losing the game in some tests. This is not a problem: as it is correct behaviour, it will pass the tests.
