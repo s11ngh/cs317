@@ -221,11 +221,11 @@ The correct implementation of alpha-beta pruning will lead to Pacman losing some
 
 Minimax and alpha-beta are great, but they both assume that you are playing against an adversary who makes optimal decisions. As anyone who has ever won tic-tac-toe can tell you, this is not always the case. In this question you will implement the `ExpectimaxAgent`, which is useful for modeling probabilistic behavior of agents who may make suboptimal choices.
 
-As with the search and constraint satisfaction problems covered so far in this class, the beauty of these algorithms is their general applicability. To expedite your own development, we've supplied some test cases based on generic trees. You can debug your implementation on small the game trees using the command:
+As with the search and constraint satisfaction problems covered so far in this class, the beauty of these algorithms is their general applicability. To expedite your own development, we've supplied some test cases based on generic trees. Debugging on these small and manageable test cases is recommended and will help you to find bugs quickly. You can debug your implementation on small game trees using the command:
 
     python autograder.py -q q4
 
-Debugging on these small and manageable test cases is recommended and will help you to find bugs quickly. Remember that in Python 3, Integer division automatically converts to floats, unlike in Java or C# or Ruby or most other programming languages. So, 1/2 is 0.5, not 0.
+_Note_: Remember that in Python 3, integer division automatically converts to floats, unlike in Java or C# or Ruby or most other programming languages. So, 1/2 is 0.5, not 0.
 
 Once your algorithm is working on small trees, you can observe its success in Pacman. Random ghosts are of course not optimal minimax agents, and so modeling them with minimax search may not be appropriate. `ExpectimaxAgent`, will no longer take the min over all ghost actions, but the expectation according to your agent's model of how the ghosts act. To simplify your code, assume you will only be running against an adversary which chooses amongst their `getLegalAction`s uniformly at random.
 
@@ -262,7 +262,7 @@ Grading: the autograder will run your agent on the `smallClassic` layout 10 time
 #### Hints and Observations
 
 *   As for your reflex agent evaluation function, you may want to use the reciprocal of important values (such as distance to food) rather than the values themselves.
-*   One way you might want to write your evaluation function is to use a linear combination of features. That is, compute values for features about the state that you think are important, and then combine those features by multiplying them by different values and adding the results together. You might decide what to multiply each feature by based on how important you think it is.
+*   One way you might want to write your evaluation function is to use a linear combination of features. That is, compute values for features about the state that you think are important, and then combine those features by multiplying them by different values and adding the results together. You might choose what coefficient to multiply each feature by based on how important you think it is.
 
 * * *
 
