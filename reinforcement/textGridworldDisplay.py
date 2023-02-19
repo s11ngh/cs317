@@ -255,11 +255,7 @@ def border(text):
 # Indenting code based on a post from George Sakkis
 # (http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/267662)
 
-try:
-    from StringIO import StringIO ## for Python 2
-except ImportError:
-    from io import StringIO
-import operator
+import io,operator
 
 def indent(rows, hasHeader=False, headerChar='-', delim=' | ', justify='left',
            separateRows=False, prefix='', postfix='', wrapfunc=lambda x:x):
@@ -280,26 +276,25 @@ def indent(rows, hasHeader=False, headerChar='-', delim=' | ', justify='left',
     # closure for breaking logical rows to physical, using wrapfunc
     def rowWrapper(row):
         newRows = [wrapfunc(item).split('\n') for item in row]
-        return [[substr or '' for substr in item] for item in map(None,*newRows)]
+        return [[substr or '' for substr in item] for item in list(*newRows)]
     # break each logical row into one or more physical ones
     logicalRows = [rowWrapper(row) for row in rows]
     # columns of physical rows
-    columns = map(None,*reduce(operator.add,logicalRows))
+    columns = list(*reduce(operator.add,logicalRows))
     # get the maximum of each column by the string length of its items
     maxWidths = [max([len(str(item)) for item in column]) for column in columns]
     rowSeparator = headerChar * (len(prefix) + len(postfix) + sum(maxWidths) + \
                                  len(delim)*(len(maxWidths)-1))
     # select the appropriate justify method
     justify = {'center':str.center, 'right':str.rjust, 'left':str.ljust}[justify.lower()]
-    output=StringIO()
-    if separateRows: print >> output, rowSeparator
+    output=io.StringIO()
+    if separateRows: print(rowSeparator, file=output)
     for physicalRows in logicalRows:
         for row in physicalRows:
-            print >> output, \
-                prefix \
+            print(prefix \
                 + delim.join([justify(str(item),width) for (item,width) in zip(row,maxWidths)]) \
-                + postfix
-        if separateRows or hasHeader: print >> output, rowSeparator; hasHeader=False
+                + postfix, file=output)
+        if separateRows or hasHeader: print(rowSeparator, file=output); hasHeader=False
     return output.getvalue()
 
 import math
@@ -315,7 +310,7 @@ def wrap_always(text, width):
 if __name__ == '__main__':
     import gridworld, util
 
-    grid = gridworld.getCliffGrid2()
+    grid = gridworld.getCliffGrid3()
     print(grid.getStates())
 
     policy = dict([(state,'east') for state in grid.getStates()])

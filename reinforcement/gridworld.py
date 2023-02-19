@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -31,6 +31,7 @@ class Gridworld(mdp.MarkovDecisionProcess):
         # parameters
         self.livingReward = 0.0
         self.noise = 0.2
+        # self.noise = 0
 
     def setLivingReward(self, reward):
         """
@@ -63,6 +64,12 @@ class Gridworld(mdp.MarkovDecisionProcess):
         if type(self.grid[x][y]) == int:
             return ('exit',)
         return ('north','west','south','east')
+
+    def get4Actions(self, state):
+        actions_list = list(self.getPossibleActions(state))
+        if len(actions_list) == 1:
+            actions_list = [actions_list[0] for _ in range(4)]
+        return actions_list
 
     def getStates(self):
         """
@@ -98,7 +105,7 @@ class Gridworld(mdp.MarkovDecisionProcess):
             for y in range(self.grid.height):
                 if self.grid[x][y] == 'S':
                     return (x, y)
-        raise 'Grid has no start state'
+        raise Exception('Grid has no start state')
 
     def isTerminal(self, state):
         """
@@ -120,7 +127,7 @@ class Gridworld(mdp.MarkovDecisionProcess):
         """
 
         if action not in self.getPossibleActions(state):
-            raise "Illegal action!"
+            raise Exception("Illegal action!")
 
         if self.isTerminal(state):
             return []
@@ -167,7 +174,7 @@ class Gridworld(mdp.MarkovDecisionProcess):
         for state, prob in statesAndProbs:
             counter[state] += prob
         newStatesAndProbs = []
-        for state, prob in counter.items():
+        for state, prob in list(counter.items()):
             newStatesAndProbs.append((state, prob))
         return newStatesAndProbs
 
@@ -205,11 +212,11 @@ class GridworldEnvironment(environment.Environment):
         for nextState, prob in successors:
             sum += prob
             if sum > 1.0:
-                raise 'Total transition probability more than one; sample failure.'
+                raise Exception('Total transition probability more than one; sample failure.')
             if rand < sum:
                 reward = self.gridWorld.getReward(state, action, nextState)
                 return (nextState, reward)
-        raise 'Total transition probability less than one; sample failure.'
+        raise Exception('Total transition probability less than one; sample failure.')
 
     def reset(self):
         self.state = self.gridWorld.getStartState()
@@ -311,16 +318,6 @@ def getMazeGrid():
             ['S',' ',' ',' ']]
     return Gridworld(grid)
 
-def getVerticalBridgeGrid():
-    grid = [['#', 10, '#'],
-            [-100, ' ', -100],
-            [-100, ' ', -100],
-            [-100, ' ', -100],
-            [-100, ' ', -100],
-            [-100, 'S', -100],
-            ['#',  1, '#']]
-    return Gridworld(grid)
-
 
 
 def getUserAction(state, actionFunction):
@@ -358,18 +355,18 @@ def runEpisode(agent, environment, discount, decision, display, message, pause, 
         # DISPLAY CURRENT STATE
         state = environment.getCurrentState()
         display(state)
+        pause()
 
         # END IF IN A TERMINAL STATE
         actions = environment.getPossibleActions(state)
         if len(actions) == 0:
             message("EPISODE "+str(episode)+" COMPLETE: RETURN WAS "+str(returns)+"\n")
-            pause()
             return returns
 
         # GET ACTION (USUALLY FROM AGENT)
         action = decision(state)
         if action == None:
-            raise 'Error: Agent returned None action'
+            raise Exception('Error: Agent returned None action')
 
         # EXECUTE ACTION
         nextState, reward = environment.doAction(action)
@@ -413,12 +410,12 @@ def parseOptions():
                          metavar="K", help='Number of epsiodes of the MDP to run (default %default)')
     optParser.add_option('-g', '--grid',action='store',
                          metavar="G", type='string',dest='grid',default="BookGrid",
-                         help='Grid to use (case sensitive; options are BookGrid, BridgeGrid, CliffGrid, MazeGrid, VerticalBridgeGrid, default %default)' )
+                         help='Grid to use (case sensitive; options are BookGrid, BridgeGrid, CliffGrid, MazeGrid, default %default)' )
     optParser.add_option('-w', '--windowSize', metavar="X", type='int',dest='gridSize',default=150,
                          help='Request a window width of X pixels *per grid cell* (default %default)')
     optParser.add_option('-a', '--agent',action='store', metavar="A",
                          type='string',dest='agent',default="random",
-                         help='Agent type (options are \'random\', \'value\' and \'q\', default %default)')
+                         help='Agent type (options are \'random\', \'value\', \'q\', and \'learn\', default %default)')
     optParser.add_option('-t', '--text',action='store_true',
                          dest='textDisplay',default=False,
                          help='Use text-only ASCII display')
@@ -439,7 +436,7 @@ def parseOptions():
 
     opts, args = optParser.parse_args()
 
-    if opts.manual and opts.agent != 'q':
+    if opts.manual and (opts.agent != 'q' and opts.agent != 'learn'):
         print('## Disabling Agents in Manual Mode (-m) ##')
         opts.agent = None
 
@@ -455,16 +452,13 @@ def parseOptions():
     return opts
 
 
-def main(myargs):
-    sys.argv = myargs.split()
+if __name__ == '__main__':
+
     opts = parseOptions()
 
     ###########################
     # GET THE GRIDWORLD
     ###########################
-
-    if opts.grid == 'VerticalBridgeGrid':
-        opts.gridSize = 120
 
     import gridworld
     mdpFunction = getattr(gridworld, "get"+opts.grid)
@@ -496,6 +490,15 @@ def main(myargs):
     a = None
     if opts.agent == 'value':
         a = valueIterationAgents.ValueIterationAgent(mdp, opts.discount, opts.iters)
+    elif opts.agent == 'learn':
+        print("HERE")
+        gridWorldEnv = GridworldEnvironment(mdp)
+        actionFn = lambda state: mdp.getPossibleActions(state)
+        qLearnOpts = {'gamma': opts.discount,
+                      'alpha': opts.learningRate,
+                      'epsilon': opts.epsilon,
+                      'actionFn': actionFn}
+        a = qlearningAgents.LearnedQAgent(gridWorldEnv.gridWorld, **qLearnOpts)
     elif opts.agent == 'q':
         #env.getPossibleActions, opts.discount, opts.learningRate, opts.epsilon
         #simulationFn = lambda agent, state: simulation.GridworldSimulation(agent,state,mdp)
@@ -523,8 +526,12 @@ def main(myargs):
             def update(self, state, action, nextState, reward):
                 pass
         a = RandomAgent()
+    elif opts.agent == 'asynchvalue':
+        a = valueIterationAgents.AsynchronousValueIterationAgent(mdp, opts.discount, opts.iters)
+    elif opts.agent == 'priosweepvalue':
+        a = valueIterationAgents.PrioritizedSweepingValueIterationAgent(mdp, opts.discount, opts.iters)
     else:
-        if not opts.manual: raise 'Unknown agent type: '+opts.agent
+        if not opts.manual: raise Exception('Unknown agent type: '+opts.agent)
 
 
     ###########################
@@ -532,7 +539,7 @@ def main(myargs):
     ###########################
     # DISPLAY Q/V VALUES BEFORE SIMULATION OF EPISODES
     try:
-        if not opts.manual and opts.agent == 'value':
+        if not opts.manual and opts.agent in ('value', 'asynchvalue', 'priosweepvalue', 'learn'):
             if opts.valueSteps:
                 for i in range(opts.iters):
                     tempAgent = valueIterationAgents.ValueIterationAgent(mdp, opts.discount, i)
@@ -554,8 +561,8 @@ def main(myargs):
         if opts.manual and opts.agent == None:
             displayCallback = lambda state: display.displayNullValues(state)
         else:
-            if opts.agent == 'random': displayCallback = lambda state: display.displayValues(a, state, "CURRENT VALUES")
-            if opts.agent == 'value': displayCallback = lambda state: display.displayValues(a, state, "CURRENT VALUES")
+            if opts.agent in ('random', 'value', 'asynchvalue', 'priosweepvalue'):
+                displayCallback = lambda state: display.displayValues(a, state, "CURRENT VALUES")
             if opts.agent == 'q': displayCallback = lambda state: display.displayQValues(a, state, "CURRENT Q-VALUES")
 
     messageCallback = lambda x: printString(x)
@@ -596,7 +603,3 @@ def main(myargs):
             display.pause()
         except KeyboardInterrupt:
             sys.exit(0)
-
-
-if __name__ == '__main__':
-    main(' '.join(sys.argv))

@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -14,13 +14,14 @@
 
 import testClasses
 import random, math, traceback, sys, os
-import layout, textDisplay, pacman, gridworld
+import layout, textDisplay, graphicsDisplay, pacman, gridworld
 import time
-from functools import reduce
-from util import Counter, TimeoutFunction, FixedRandom
+from util import Counter, TimeoutFunction, FixedRandom, Experiences
 from collections import defaultdict
 from pprint import PrettyPrinter
 from hashlib import sha1
+from functools import reduce
+from pacman import runGames, loadAgent
 pp = PrettyPrinter()
 VERBOSE = False
 
@@ -123,7 +124,7 @@ class ValueIterationTest(testClasses.TestCase):
     def runAgent(self, moduleDict, numIterations):
         agent = moduleDict['valueIterationAgents'].ValueIterationAgent(self.grid, discount=self.discount, iterations=numIterations)
         states = self.grid.getStates()
-        actions = list(reduce(lambda a, b: set(a).union(b), [self.grid.getPossibleActions(state) for state in states], set()))
+        actions = list(reduce(lambda a, b: set(a).union(b), [self.grid.getPossibleActions(state) for state in states]))
         values = {}
         qValues = {}
         policy = {}
@@ -132,7 +133,7 @@ class ValueIterationTest(testClasses.TestCase):
             policy[state] = agent.computeActionFromValues(state)
             possibleActions = self.grid.getPossibleActions(state)
             for action in actions:
-                if not action in qValues:
+                if action not in qValues:
                     qValues[action] = {}
                 if action in possibleActions:
                     qValues[action][state] = agent.computeQValueFromValues(state, action)
@@ -195,7 +196,6 @@ class ValueIterationTest(testClasses.TestCase):
         values = pretty.split()
         return values
 
-
 class ApproximateQLearningTest(testClasses.TestCase):
 
     def __init__(self, question, testDict):
@@ -216,6 +216,11 @@ class ApproximateQLearningTest(testClasses.TestCase):
         maxPreExperiences = 10
         self.numsExperiencesForDisplay = list(range(min(numExperiences, maxPreExperiences)))
         self.testOutFile = testDict['test_out_file']
+        if sys.platform == 'win32':
+            _, question_name, test_name = testDict['test_out_file'].split('\\')
+        else:
+            _, question_name, test_name = testDict['test_out_file'].split('/')
+        self.experiences = Experiences(test_name.split('.')[0])
         if maxPreExperiences < numExperiences:
             self.numsExperiencesForDisplay.append(numExperiences)
 
@@ -279,25 +284,19 @@ class ApproximateQLearningTest(testClasses.TestCase):
 
     def runAgent(self, moduleDict, numExperiences):
         agent = moduleDict['qlearningAgents'].ApproximateQAgent(extractor=self.extractor, **self.opts)
-        states = filter(lambda state : len(self.grid.getPossibleActions(state)) > 0, self.grid.getStates())
-        sorted(states)
-        randObj = FixedRandom().random
-        # choose a random start state and a random possible action from that state
-        # get the next state and reward from the transition function
+        states = [state for state in self.grid.getStates() if len(self.grid.getPossibleActions(state)) > 0]
+        states.sort()
         lastExperience = None
-        for _ in range(numExperiences):
-            startState = randObj.choice(states)
-            action = randObj.choice(self.grid.getPossibleActions(startState))
-            (endState, reward) = self.env.getRandomNextState(startState, action, randObj=randObj)
-            lastExperience = (startState, action, endState, reward)
+        for i in range(numExperiences):
+            lastExperience = self.experiences.get_experience()
             agent.update(*lastExperience)
-        actions = list(reduce(lambda a, b: set(a).union(b), [self.grid.getPossibleActions(state) for state in states], set()))
+        actions = list(reduce(lambda a, b: set(a).union(b), [self.grid.getPossibleActions(state) for state in states]))
         qValues = {}
         weights = agent.getWeights()
         for state in states:
             possibleActions = self.grid.getPossibleActions(state)
             for action in actions:
-                if not action in qValues:
+                if action not in qValues:
                     qValues[action] = {}
                 if action in possibleActions:
                     qValues[action][state] = agent.getQValue(state, action)
@@ -376,6 +375,11 @@ class QLearningTest(testClasses.TestCase):
         maxPreExperiences = 10
         self.numsExperiencesForDisplay = list(range(min(numExperiences, maxPreExperiences)))
         self.testOutFile = testDict['test_out_file']
+        if sys.platform == 'win32':
+            _, question_name, test_name = testDict['test_out_file'].split('\\')
+        else:
+            _, question_name, test_name = testDict['test_out_file'].split('/')
+        self.experiences = Experiences(test_name.split('.')[0])
         if maxPreExperiences < numExperiences:
             self.numsExperiencesForDisplay.append(numExperiences)
 
@@ -407,15 +411,19 @@ class QLearningTest(testClasses.TestCase):
         testPass = True
         valuesPretty, qValuesPretty, actions, policyPretty, lastExperience = self.runAgent(moduleDict, n)
         stdOutString = ''
-        fileOutString = "==================== Iteration %d ====================\n" % n
+        # fileOutString = "==================== Iteration %d ====================\n" % n
+        fileOutString = ''
         if lastExperience is not None:
-            fileOutString += "Agent observed the transition (startState = %s, action = %s, endState = %s, reward = %f)\n\n\n" % lastExperience
+            # fileOutString += "Agent observed the transition (startState = %s, action = %s, endState = %s, reward = %f)\n\n\n" % lastExperience
+            pass
         for action in actions:
             qValuesKey = 'q_values_k_%d_action_%s' % (n, action)
             qValues = qValuesPretty[action]
+
             if self.comparePrettyValues(qValues, solutionDict[qValuesKey]):
-                fileOutString += "Q-Values at iteration %d for action '%s' are correct." % (n, action)
-                fileOutString += "   Student/correct solution:\n\t%s" % self.prettyValueSolutionString(qValuesKey, qValues)
+                # fileOutString += "Q-Values at iteration %d for action '%s' are correct." % (n, action)
+                # fileOutString += "   Student/correct solution:\n\t%s" % self.prettyValueSolutionString(qValuesKey, qValues)
+                pass
             else:
                 testPass = False
                 outString = "Q-Values at iteration %d for action '%s' are NOT correct." % (n, action)
@@ -454,19 +462,15 @@ class QLearningTest(testClasses.TestCase):
 
     def runAgent(self, moduleDict, numExperiences):
         agent = moduleDict['qlearningAgents'].QLearningAgent(**self.opts)
-        states = list(filter(lambda state : len(self.grid.getPossibleActions(state)) > 0, self.grid.getStates()))
-        sorted(states)
-        randObj = FixedRandom().random
-        # choose a random start state and a random possible action from that state
-        # get the next state and reward from the transition function
+        # self.grid = gridworld.getCliffGrid()
+        # agent = moduleDict['qlearningAgents'].LearnedQAgent(self.grid)
+        states = [state for state in self.grid.getStates() if len(self.grid.getPossibleActions(state)) > 0]
+        states.sort()
         lastExperience = None
-        for _ in range(numExperiences):
-            startState = randObj.choice(states)
-            action = randObj.choice(self.grid.getPossibleActions(startState))
-            (endState, reward) = self.env.getRandomNextState(startState, action, randObj=randObj)
-            lastExperience = (startState, action, endState, reward)
+        for i in range(numExperiences):
+            lastExperience = self.experiences.get_experience()
             agent.update(*lastExperience)
-        actions = list(reduce(lambda a, b: set(a).union(b), [self.grid.getPossibleActions(state) for state in states], set()))
+        actions = list(reduce(lambda a, b: set(a).union(b), [self.grid.getPossibleActions(state) for state in states]))
         values = {}
         qValues = {}
         policy = {}
@@ -475,12 +479,13 @@ class QLearningTest(testClasses.TestCase):
             policy[state] = agent.computeActionFromQValues(state)
             possibleActions = self.grid.getPossibleActions(state)
             for action in actions:
-                if not action in qValues:
+                if action not in qValues:
                     qValues[action] = {}
                 if action in possibleActions:
                     qValues[action][state] = agent.getQValue(state, action)
                 else:
                     qValues[action][state] = None
+        # print(agent.getQValue([0,0], "exit"))
         valuesPretty = self.prettyValues(values)
         policyPretty = self.prettyPolicy(policy)
         qValuesPretty = {}
@@ -496,7 +501,7 @@ class QLearningTest(testClasses.TestCase):
             row = []
             for x in range(self.grid.grid.width):
                 if (x, y) in states:
-                    value = elements.get((x, y), None)
+                    value = elements[(x, y)]
                     if value is None:
                         row.append('   illegal')
                     else:
@@ -555,6 +560,11 @@ class EpsilonGreedyTest(testClasses.TestCase):
         self.numExperiences = int(testDict['numExperiences'])
         self.numIterations = int(testDict['iterations'])
         self.opts = {'actionFn': self.env.getPossibleActions, 'epsilon': self.epsilon, 'gamma': self.discount, 'alpha': self.learningRate}
+        if sys.platform == 'win32':
+            _, question_name, test_name = testDict['test_out_file'].split('\\')
+        else:
+            _, question_name, test_name = testDict['test_out_file'].split('/')
+        self.experiences = Experiences(test_name.split('.')[0])
 
     def execute(self, grades, moduleDict, solutionDict):
         if self.testEpsilonGreedy(moduleDict):
@@ -570,16 +580,11 @@ class EpsilonGreedyTest(testClasses.TestCase):
 
     def runAgent(self, moduleDict):
         agent = moduleDict['qlearningAgents'].QLearningAgent(**self.opts)
-        states = list(filter(lambda state : len(self.grid.getPossibleActions(state)) > 0, self.grid.getStates()))
-        sorted(states)
-        randObj = FixedRandom().random
-        # choose a random start state and a random possible action from that state
-        # get the next state and reward from the transition function
-        for _ in range(self.numExperiences):
-            startState = randObj.choice(states)
-            action = randObj.choice(self.grid.getPossibleActions(startState))
-            (endState, reward) = self.env.getRandomNextState(startState, action, randObj=randObj)
-            agent.update(startState, action, endState, reward)
+        states = [state for state in self.grid.getStates() if len(self.grid.getPossibleActions(state)) > 0]
+        states.sort()
+        for i in range(self.numExperiences):
+            lastExperience = self.experiences.get_experience()
+            agent.update(*lastExperience)
         return agent
 
     def testEpsilonGreedy(self, moduleDict, tolerance=0.025):
@@ -590,7 +595,7 @@ class EpsilonGreedyTest(testClasses.TestCase):
                 continue
             numGreedyChoices = 0
             optimalAction = agent.computeActionFromQValues(state)
-            for _ in range(self.numIterations):
+            for iteration in range(self.numIterations):
                 # assume that their computeActionFromQValues implementation is correct (q4 tests this)
                 if agent.getAction(state) == optimalAction:
                     numGreedyChoices += 1
@@ -604,31 +609,6 @@ class EpsilonGreedyTest(testClasses.TestCase):
                 self.addMessage("Epsilon-greedy action selection is not correct.")
                 self.addMessage("Actual epsilon = %f; student empirical epsilon = %f; error = %f > tolerance = %f" % (self.epsilon, empiricalEpsilon, error, tolerance))
                 return False
-        return True
-
-
-### q6
-class Question6Test(testClasses.TestCase):
-
-    def __init__(self, question, testDict):
-        super(Question6Test, self).__init__(question, testDict)
-
-    def execute(self, grades, moduleDict, solutionDict):
-        studentSolution = moduleDict['analysis'].question6()
-        studentSolution = str(studentSolution).strip().lower()
-        hashedSolution = sha1(studentSolution).hexdigest()
-        if hashedSolution == '46729c96bb1e4081fdc81a8ff74b3e5db8fba415':
-            return self.testPass(grades)
-        else:
-            self.addMessage("Solution is not correct.")
-            self.addMessage("   Student solution: %s" % (studentSolution,))
-            return self.testFail(grades)
-
-    def writeSolution(self, moduleDict, filePath):
-        handle = open(filePath, 'w')
-        handle.write('# This is the solution file for %s.\n' % self.path)
-        handle.write('# File intentionally blank.\n')
-        handle.close()
         return True
 
 
@@ -729,7 +709,7 @@ class EvalAgentTest(testClasses.TestCase):
 def followPath(policy, start, numSteps=100):
     state = start
     path = []
-    for _ in range(numSteps):
+    for i in range(numSteps):
         if state not in policy:
             break
         action = policy[state]
@@ -902,7 +882,7 @@ class GridPolicyTest(testClasses.TestCase):
 
     def printPolicy(self, policy, policyTypeIsGrid):
         if policyTypeIsGrid:
-            legend = {'N': 'N', 'E': 'E', 'S': 'S', 'W': 'W', ' ': '_'}
+            legend = {'N': 'N', 'E': 'E', 'S': 'S', 'W': 'W', ' ': '_', 'X': 'X', '.': '.'}
         else:
             legend = {'north': 'N', 'east': 'E', 'south': 'S', 'west': 'W', 'exit': 'X', '.': '.', ' ': '_'}
 
@@ -922,4 +902,3 @@ class GridPolicyTest(testClasses.TestCase):
             handle.write('# This is the solution file for %s.\n' % self.path)
             handle.write('# File intentionally blank.\n')
         return True
-

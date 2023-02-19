@@ -4,7 +4,7 @@
 # educational purposes provided that (1) you do not distribute or publish
 # solutions, (2) you retain this notice, and (3) you provide clear
 # attribution to UC Berkeley, including a link to http://ai.berkeley.edu.
-# 
+#
 # Attribution Information: The Pacman AI projects were developed at UC Berkeley.
 # The core projects and autograders were primarily created by John DeNero
 # (denero@cs.berkeley.edu) and Dan Klein (klein@cs.berkeley.edu).
@@ -19,50 +19,54 @@
 # Set the given parameters to obtain the specified policies through
 # value iteration.
 
-def question2():
-    answerDiscount = 0.9
-    answerNoise = 0.2
-    return answerDiscount, answerNoise
-
-def question3a():
+def question2a():
+    """
+      Prefer the close exit (+1), risking the cliff (-10).
+    """
     answerDiscount = None
     answerNoise = None
     answerLivingReward = None
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question3b():
+def question2b():
+    """
+      Prefer the close exit (+1), but avoiding the cliff (-10).
+    """
     answerDiscount = None
     answerNoise = None
     answerLivingReward = None
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question3c():
+def question2c():
+    """
+      Prefer the distant exit (+10), risking the cliff (-10).
+    """
     answerDiscount = None
     answerNoise = None
     answerLivingReward = None
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question3d():
+def question2d():
+    """
+      Prefer the distant exit (+10), avoiding the cliff (-10).
+    """
     answerDiscount = None
     answerNoise = None
     answerLivingReward = None
     return answerDiscount, answerNoise, answerLivingReward
     # If not possible, return 'NOT POSSIBLE'
 
-def question3e():
+def question2e():
+    """
+      Avoid both exits and the cliff (so an episode should never terminate).
+    """
     answerDiscount = None
     answerNoise = None
     answerLivingReward = None
     return answerDiscount, answerNoise, answerLivingReward
-    # If not possible, return 'NOT POSSIBLE'
-
-def question6():
-    answerEpsilon = None
-    answerLearningRate = None
-    return answerEpsilon, answerLearningRate
     # If not possible, return 'NOT POSSIBLE'
 
 if __name__ == '__main__':

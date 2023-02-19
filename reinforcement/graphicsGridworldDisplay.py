@@ -270,7 +270,7 @@ def drawSquareQ(x, y, qVals, minVal, maxVal, valStrs, bestActions, isCurrent):
     w = (screen_x-0.5*GRID_SIZE+5, screen_y)
     e = (screen_x+0.5*GRID_SIZE-5, screen_y)
 
-    actions = qVals.keys()
+    actions = list(qVals.keys())
     for action in actions:
 
         wedge_color = getColor(qVals[action], minVal, maxVal)
