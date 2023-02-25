@@ -32,15 +32,15 @@ In this project, you will implement value iteration and Q-learning. You will tes
 
 As in previous projects, this project includes an autograder for you to grade your solutions on your machine. This can be run on all questions with the command:
 
-  python autograder.py
+    python autograder.py
 
 It can be run for one particular question, such as q2, by:
 
-  python autograder.py -q q2
+    python autograder.py -q q2
 
 It can be run for one particular test by commands of the form:
 
-  python autograder.py -t test_cases/q2/1-bridge-grid
+    python autograder.py -t test_cases/q2/1-bridge-grid
 
 See the autograder tutorial in Project 0 for more information about using the autograder.
 
