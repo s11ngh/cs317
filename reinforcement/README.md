@@ -32,15 +32,15 @@ In this project, you will implement value iteration and Q-learning. You will tes
 
 As in previous projects, this project includes an autograder for you to grade your solutions on your machine. This can be run on all questions with the command:
 
-  python autograder.py
+    python autograder.py
 
 It can be run for one particular question, such as q2, by:
 
-  python autograder.py -q q2
+    python autograder.py -q q2
 
 It can be run for one particular test by commands of the form:
 
-  python autograder.py -t test_cases/q2/1-bridge-grid
+    python autograder.py -t test_cases/q2/1-bridge-grid
 
 See the autograder tutorial in Project 0 for more information about using the autograder.
 
@@ -106,17 +106,17 @@ The code for this project contains the following files, which are available in a
 
 To get started, run Gridworld in manual control mode, which uses the arrow keys:
 
-  python gridworld.py -m
+    python gridworld.py -m
 
 You will see the two-exit layout from class. The blue dot is the agent. Note that when you press _up_, the agent only actually moves north 80% of the time. Such is the life of a Gridworld agent!
 
 You can control many aspects of the simulation. A full list of options is available by running:
 
-  python gridworld.py -h
+    python gridworld.py -h
 
 The default agent moves randomly
 
-  python gridworld.py -g MazeGrid
+    python gridworld.py -g MazeGrid
 
 You should see the random agent bounce around the grid until it happens upon an exit. Not the finest hour for an AI agent.
 
@@ -132,7 +132,7 @@ As in Pacman, positions are represented by `(x,y)` Cartesian coordinates and any
 
 Recall the value iteration state update equation:
 
-  $$V_{k+1}(s) \leftarrow \max_a \sum_{s'} T(s,a,s')\left[R(s,a,s') + \gamma V_k(s')\right]$$
+  $$\large V_{k+1}(s) \leftarrow \max_a \sum_{s'} T(s,a,s')\left[R(s,a,s') + \gamma V_k(s')\right]$$
 
 Write a value iteration agent in `ValueIterationAgent`, which has been partially specified for you in `valueIterationAgents.py`. Your value iteration agent is an offline planner, not a reinforcement learning agent, and so the relevant training option is the number of iterations of value iteration it should run (option `-i`) in its initial planning phase. `ValueIterationAgent` takes an MDP on construction and runs value iteration for the specified number of iterations before the constructor returns.
 
@@ -143,7 +143,7 @@ Value iteration computes $k$-step estimates of the optimal values, $V_k$. In add
 
 These quantities are all displayed in the GUI: values are numbers in squares, Q-values are numbers in square quarters, and policies are arrows out from each square.
 
-_Important:_ Use the "batch" version of value iteration where each vector $V_k$ is computed from a fixed vector $V_{k-1}$ (like in lecture), not the "online" version where one single weight vector is updated in place. This means that when a state's value is updated in iteration $k$ based on the values of its successor states, the successor state values used in the value update computation should be those from iteration $k-1$ (even if some of the successor states had already been updated in iteration $k$). The difference is discussed in [Sutton & Barto](http://www.cs.ualberta.ca/~sutton/book/ebook/node41.html) in Chapter 4.1 on page 91.
+_Important:_ Use the "batch" version of value iteration where each vector $V_k$ is computed from a fixed vector $V_{k-1}$ (like in lecture), not the "online" version where one single weight vector is updated in place. This means that when a state's value is updated in iteration $k$ based on the values of its successor states, the successor state values used in the value update computation should be those from iteration $k-1$ (even if some of the successor states had already been updated in iteration $k$). The difference is discussed in [Sutton & Barto](https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf) in Chapter 4.1 on page 91: _"To write a sequential computer program to implement iterative policy evaluation, as given by [the above equation], you would have to use two arrays, one for the old values,_ $V_k(s)$_, and one for the new values,_ $V_{k+1}(s)$_. This way, the new values can be computed one by one from the old values without the old values being changed._"
 
 _Note:_ A policy synthesized from values of depth $k$ (which reflect the next $k$ rewards) will actually reflect the next k+1 rewards (i.e. you return $\pi_{k+1}$). Similarly, the Q-values will also reflect one more reward than the values (i.e. you return $Q_{k+1}$).
 
@@ -155,15 +155,15 @@ _Note:_ Make sure to handle the case when a state has no available actions in an
 
 To test your implementation, run the autograder:
 
-  python autograder.py -q q1
+    python autograder.py -q q1
 
 The following command loads your `ValueIterationAgent`, which will compute a policy and execute it 10 times. Press a key to cycle through values, Q-values, and the simulation. You should find that the value of the start state (`V(start)`, which you can read off of the GUI) and the empirical resulting average reward (printed after the 10 rounds of execution finish) are quite close.
 
-  python gridworld.py -a value -i 100 -k 10
+    python gridworld.py -a value -i 100 -k 10
 
 _Hint:_ On the default BookGrid, running value iteration for 5 iterations should give you this output:
 
-  python gridworld.py -a value -i 5
+    python gridworld.py -a value -i 5
 
 ![value iteration with k=5](http://ai.berkeley.edu/projects/release/reinforcement/v1/001/value.png)
 
@@ -193,7 +193,7 @@ To see what behavior a set of numbers ends up in, run the following command to s
   
 To check your answers, run the autograder:
 
-  python autograder.py -q q2
+      python autograder.py -q q2
 
 `question2a()` through `question2e()` should each return a 3-item tuple of `(discount, noise, living reward)` in `analysis.py`.
 
@@ -217,7 +217,7 @@ _Important:_ Make sure that in your `computeValueFromQValues` and `computeAction
 
 With the Q-learning update in place, you can watch your Q-learner learn under manual control, using the keyboard:
 
-  python gridworld.py -a q -k 5 -m
+    python gridworld.py -a q -k 5 -m
 
 Recall that `-k` will control the number of episodes your agent gets to learn. Watch how the agent learns about the state it was just in, not the one it moves to, and "leaves learning in its wake." Hint: to help with debugging, you can turn off noise by using the `--noise 0.0` parameter (though this obviously makes Q-learning less interesting). If you manually steer Pacman north and then east along the optimal path for four episodes, you should see the following Q-values:
 
@@ -225,7 +225,7 @@ Recall that `-k` will control the number of episodes your agent gets to learn. W
 
 _Grading:_ We will run your Q-learning agent and check that it learns the same Q-values and policy as our reference implementation when each is presented with the same set of examples. To grade your implementation, run the autograder:
 
-  python autograder.py -q q3
+    python autograder.py -q q3
 
 * * *
 
@@ -237,23 +237,23 @@ You can choose an element from a list uniformly at random by calling the `random
 
 After implementing the `getAction` method, observe the following behavior of the agent in `GridWorld` (with epsilon = 0.3).
 
-  python gridworld.py -a q -k 100
+    python gridworld.py -a q -k 100
 
 Your final Q-values should resemble those of your value iteration agent, especially along well-traveled paths. However, your average returns will be lower than the Q-values predict because of the random actions and the initial learning phase.
 
 You can also observe the following simulations for different epsilon values. Does that behavior of the agent match what you expect?
   
-  python gridworld.py -a q -k 100 --noise 0.0 -e 0.1
+    python gridworld.py -a q -k 100 --noise 0.0 -e 0.1
     
-  python gridworld.py -a q -k 100 --noise 0.0 -e 0.9
+    python gridworld.py -a q -k 100 --noise 0.0 -e 0.9
 
 To test your implementation, run the autograder:
 
-`python autograder.py -q q4`
+    python autograder.py -q q4
 
 With no additional code, you should now be able to run a Q-learning crawler robot:
 
-`python crawler.py`
+    python crawler.py
 
 If this doesn’t work, you’ve probably written some code too specific to the `GridWorld` problem and you should make it more general to all MDPs.
 
@@ -265,7 +265,7 @@ This will invoke the crawling robot from class using your Q-learner. Play around
 
 Time to play some Pacman! Pacman will play games in two phases. In the first phase, training, Pacman will begin to learn about the values of positions and actions. Because it takes a very long time to learn accurate Q-values even for tiny grids, Pacman’s training games run in quiet mode by default, with no GUI (or console) display. Once Pacman’s training is complete, he will enter testing mode. When testing, Pacman’s `self.epsilon` and `self.alpha` will be set to 0.0, effectively stopping Q-learning and disabling exploration, in order to allow Pacman to exploit his learned policy. Test games are shown in the GUI by default. Without any code changes you should be able to run Q-learning Pacman for very tiny grids as follows:
 
-  python pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid
+    python pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid
 
 Note that `PacmanQAgent` is already defined for you in terms of the `QLearningAgent` you've already written. `PacmanQAgent` is only different in that it has default learning parameters that are more effective for the Pacman problem (`epsilon=0.05, alpha=0.2, gamma=0.8`). You will receive full credit for this question if the command above works without exceptions and your agent wins at least 80% of the time. The autograder will run 100 test games after the 2000 training games.
 
@@ -273,7 +273,7 @@ _Hint:_ If your `QLearningAgent` works for `gridworld.py` and `crawler.py` but d
 
 To grade your answer, run:
 
-  python autograder.py -q q5
+    python autograder.py -q q5
 
 _Note:_ If you want to experiment with learning parameters, you can use the option `-a`, for example `-a epsilon=0.1,alpha=0.3,gamma=0.7`. These values will then be accessible as `self.epsilon`, `self.gamma` and `self.alpha` inside the agent.
 
@@ -281,7 +281,7 @@ _Note:_ While a total of 2010 games will be played, the first 2000 games will no
 
 _Note:_ If you want to watch 10 training games to see what's going on, use the command:
 
-  python pacman.py -p PacmanQAgent -n 10 -l smallGrid -a numTraining=10`
+    python pacman.py -p PacmanQAgent -n 10 -l smallGrid -a numTraining=10`
 
 During training, you will see output every 100 games with statistics about how Pacman is faring. Epsilon is positive during training, so Pacman will play poorly even after having learned a good policy: this is because he occasionally makes a random exploratory move into a ghost. As a benchmark, it should take between 1000 and 1400 games before Pacman’s rewards for a 100 episode segment becomes positive, reflecting that he’s started winning more than losing. By the end of training, it should remain positive and be fairly high (between 100 and 350).
 
@@ -303,35 +303,35 @@ _Note:_ Approximate Q-learning assumes the existence of a feature function $f(s,
 
 The approximate Q-function takes the following form:
 
-$$Q(s,a)=\sum_{i=1}^n f_i(s,a) w_i\$$
+$$\large Q(s,a)=\sum_{i=1}^n f_i(s,a) w_i\$$
   
 where each weight $w_i$ is associated with a particular feature $f_i(s,a)$.  In your code, you should implement the weight vector as a dictionary mapping features (which the feature extractors will return) to weight values. You will update your weight vectors similarly to how you updated Q-values:
 
-$$w_i \leftarrow w_i + \alpha \cdot \text{difference} \cdot f_i(s,a)$$
+$$\large w_i \leftarrow w_i + \alpha \cdot \text{difference} \cdot f_i(s,a)$$
 
-$$\text{difference} = \left( r + \gamma \max_{a'}Q(s',a') \right) - Q(s,a)$$
+$$\large \text{difference} = \left( r + \gamma \max_{a'}Q(s',a') \right) - Q(s,a)$$
   
 Note that the $difference$ term is the same as in normal Q-learning, and $r$ is the experienced reward.
 
 By default, `ApproximateQAgent` uses the `IdentityExtractor`, which assigns a single feature to every `(state,action)` pair. With this feature extractor, your approximate Q-learning agent should work identically to `PacmanQAgent`. You can test this with the following command:
 
-  python pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallGrid
+    python pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallGrid
 
 _Important:_`ApproximateQAgent` is a subclass of `QLearningAgent`, and it therefore shares several methods like `getAction`. Make sure that your methods in `QLearningAgent` call `getQValue` instead of accessing Q-values directly, so that when you override `getQValue` in your approximate agent, the new approximate q-values are used to compute actions.
 
 Once you're confident that your approximate learner works correctly with the identity features, run your approximate Q-learning agent with our custom feature extractor, which can learn to win with ease:
 
-  python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumGrid
+    python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumGrid
 
 Even much larger layouts should be no problem for your `ApproximateQAgent`. (_warning_: this may take a few minutes to train)
 
-  python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumClassic
+    python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumClassic
 
 If you have no errors, your approximate Q-learning agent should win almost every time with these simple features, even with only 50 training games.
 
 _Grading:_ We will run your approximate Q-learning agent and check that it learns the same Q-values and feature weights as our reference implementation when each is presented with the same set of examples. To grade your implementation, run the autograder:
 
-  python autograder.py -q q6
+    python autograder.py -q q6
 
 _Congratulations! You have a learning Pacman agent!_
 
