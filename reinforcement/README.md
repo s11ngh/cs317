@@ -167,6 +167,18 @@ _Hint:_ On the default BookGrid, running value iteration for 5 iterations should
 
 ![value iteration with k=5](http://ai.berkeley.edu/projects/release/reinforcement/v1/001/value.png)
 
+-Note:_ the values visualized at the end are the resulting V(s) values for the last iteration (as per -i parameter), followed by the resulting Q(s,a) values resulting from those V(s), i.e. at the end of that iteration (hit any key once the V(s) values are displayed to see the Q(s,a) values); these are the Q(s,a) that would be used over the next iteration. To see how these values change over time, you can run:
+
+    python gridworld.py -a value -i 1   # shows starting V(s_k=1) and resuting Q(s_k=2,a)
+    python gridworld.py -a value -i 2   # shows starting V(s_k=2) and resuting Q(s_k=3,a)
+    python gridworld.py -a value -i 3   # shows starting V(s_k=3) and resuting Q(s_k=4,a)
+    python gridworld.py -a value -i 4   # shows starting V(s_k=4) and resuting Q(s_k=5,a)
+    python gridworld.py -a value -i 5   # shows starting V(s_k=5) and resuting Q(s_k=6,a)
+
+The result is:
+
+![value iteration from one iteration to the next](V_to_Q_to_V.png)
+
 _Grading:_ Your value iteration agent will be graded on a new grid. We will check your values, Q-values, and policies after fixed numbers of iterations and at convergence (e.g. after 100 iterations).
 
 * * *
@@ -197,12 +209,13 @@ To check your answers, run the autograder:
 
 `question2a()` through `question2e()` should each return a 3-item tuple of `(discount, noise, living reward)` in `analysis.py`.
 
-_Note:_ You can check your policies in the GUI. For example, using a correct answer to 3(a), the arrow in (0,1) should point east, the arrow in (1,1) should also point east, and the arrow in (2,1) should point north.
+_Note:_ You can check your policies in the GUI. For example, using a correct answer to 2(a), the arrow in (0,1) should point east, the arrow in (1,1) should also point east, and the arrow in (2,1) should point north.
 
 _Note:_ On some machines you may not see an arrow. In this case, press a button on the keyboard to switch to qValue display, and mentally calculate the policy by taking the arg max of the available qValues for each state.
 
-_Grading:_ We will check that the desired policy is returned in each case.
+_Important_: Note that the policy expected by the autograder is unambiguous in its choices; if your resulting Q-values have ties in states where there should not be a tie, random tie-breaking to choose a policy may accidentally match the expected policy and pass the autograder even when it should not; do not realy on that and get your parameters (discount, noise, reward) to avoid such ties.
 
+_Grading:_ We will check that the desired policy is returned in each case. 
 * * *
 
 ### Q3 (6 pts): Q-Learning
