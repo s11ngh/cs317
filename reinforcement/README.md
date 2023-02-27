@@ -234,7 +234,7 @@ or, equivalently:
 
   $$\large Q(s,a) \leftarrow Q(s,a) + \alpha * \underline{({\color{blue}R(s,a,s')+\gamma*\max_{a'} Q(s',a')} - Q(s,a) )}$$
   
-The $\normalsize\color{blue}\text{new experience shown in blue}$ and the underlined term represents the <ins>difference between current and oberved value</ins>.
+The $\normalsize\color{blue}\text{new experience is shown in blue}$ and the underlined term represents the <ins>difference between current and oberved value</ins>.
 
 A stub of a Q-learner is specified in `QLearningAgent` in `qlearningAgents.py`, and you can select it with the option `-a q`. For this question, you must implement the `update`, `computeValueFromQValues`, `getQValue`, and `computeActionFromQValues` methods (completing `getAction` is Q4).
 
@@ -338,7 +338,7 @@ where each weight $\large w_i$ is associated with a particular feature $\large f
 
   $$\large w_i \leftarrow w_i + \alpha \cdot \underline{\left({\color{blue}\left( R(s,a,s') + \gamma \max_{a'}Q(s',a') \right)} - Q(s,a)\right)} \cdot f_i(s,a)$$
   
-Note that the underlined <ins>difference between current and experienced value</ins> is the same as in normal Q-learning.
+The $\normalsize\color{blue}\text{new experience is again shown in blue}$ and the underlined <ins>difference between current and experienced value</ins> is the same as in normal Q-learning.
 
 By default, `ApproximateQAgent` uses the `IdentityExtractor`, which assigns a single feature to every `(state,action)` pair. With this feature extractor, your approximate Q-learning agent should work identically to `PacmanQAgent`. You can test this with the following command:
 
