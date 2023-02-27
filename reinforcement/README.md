@@ -222,7 +222,7 @@ _Grading:_ We will check that the desired policy is returned in each case.
 
 Note that your value iteration agent does not actually learn from experience. Rather, it ponders its MDP model to arrive at a complete policy before ever interacting with a real environment. When it does interact with the environment, it simply follows the precomputed policy (e.g. it becomes a reflex agent). This distinction may be subtle in a simulated environment like a Gridword, but it’s very important in the real world, where the real MDP is not available.
 
-You will now write a Q-learning agent, which does very little on construction, but instead learns by trial and error from interactions with the environment through its `update(state, action, nextState, reward)` method. Update formula is as follows ($\normalsize\color{blue}\text{new experience shown in blue}$): 
+You will now write a Q-learning agent, which does very little on construction, but instead learns by trial and error from interactions with the environment through its `update(state, action, nextState, reward)` method. Update formula is as follows: 
 
   $$\large Q(s,a) \leftarrow (1-\alpha) * Q(s,a) + \alpha * ({\color{blue}R(s,a,s')+\gamma*V(s')} )$$
   
@@ -232,7 +232,9 @@ or, equivalently:
   
 or, equivalently:
 
-  $$\large Q(s,a) \leftarrow Q(s,a) + \alpha * ({\color{blue}R(s,a,s')+\gamma*\max_{a'} Q(s',a')} - Q(s,a) )$$
+  $$\large Q(s,a) \leftarrow Q(s,a) + \alpha * \underline{({\color{blue}R(s,a,s')+\gamma*\max_{a'} Q(s',a')} - Q(s,a) )}$$
+  
+The $\normalsize\color{blue}\text{new experience shown in blue}$ and the underlined term represents the <ins>difference between current and oberved value</ins>.
 
 A stub of a Q-learner is specified in `QLearningAgent` in `qlearningAgents.py`, and you can select it with the option `-a q`. For this question, you must implement the `update`, `computeValueFromQValues`, `getQValue`, and `computeActionFromQValues` methods (completing `getAction` is Q4).
 
@@ -334,11 +336,9 @@ $$\large Q(s,a)=\sum_{i=1}^n f_i(s,a) w_i\$$
   
 where each weight $\large w_i$ is associated with a particular feature $\large f_i(s,a)$.  In your code, you should implement the weight vector as a dictionary mapping features (which the feature extractors will return) to weight values. You will update your weight vectors similarly to how you updated Q-values:
 
-$$\large w_i \leftarrow w_i + \alpha \cdot \text{difference} \cdot f_i(s,a)$$
-
-$$\large \text{difference} = \left( r + \gamma \max_{a'}Q(s',a') \right) - Q(s,a)$$
+  $$\large w_i \leftarrow w_i + \alpha \cdot \underline{\left({\color{blue}\left( R(s,a,s') + \gamma \max_{a'}Q(s',a') \right)} - Q(s,a)\right)} \cdot f_i(s,a)$$
   
-Note that the $difference$ term is the same as in normal Q-learning, and $\large r$ is the experienced reward.
+Note that the underlined <ins>difference between current and experienced value</ins> is the same as in normal Q-learning.
 
 By default, `ApproximateQAgent` uses the `IdentityExtractor`, which assigns a single feature to every `(state,action)` pair. With this feature extractor, your approximate Q-learning agent should work identically to `PacmanQAgent`. You can test this with the following command:
 
