@@ -222,7 +222,11 @@ _Grading:_ We will check that the desired policy is returned in each case.
 
 Note that your value iteration agent does not actually learn from experience. Rather, it ponders its MDP model to arrive at a complete policy before ever interacting with a real environment. When it does interact with the environment, it simply follows the precomputed policy (e.g. it becomes a reflex agent). This distinction may be subtle in a simulated environment like a Gridword, but it’s very important in the real world, where the real MDP is not available.
 
-You will now write a Q-learning agent, which does very little on construction, but instead learns by trial and error from interactions with the environment through its `update(state, action, nextState, reward)` method. A stub of a Q-learner is specified in `QLearningAgent` in `qlearningAgents.py`, and you can select it with the option `-a q`. For this question, you must implement the `update`, `computeValueFromQValues`, `getQValue`, and `computeActionFromQValues` methods (completing `getAction` is Q4).
+You will now write a Q-learning agent, which does very little on construction, but instead learns by trial and error from interactions with the environment through its `update(state, action, nextState, reward)` method. 
+
+  $$\large Q(s,a) \leftarrow (1-\alpha) * Q(s,a) + \alpha * (R(s,a,s')+\gamma*V(s'))$$
+
+A stub of a Q-learner is specified in `QLearningAgent` in `qlearningAgents.py`, and you can select it with the option `-a q`. For this question, you must implement the `update`, `computeValueFromQValues`, `getQValue`, and `computeActionFromQValues` methods (completing `getAction` is Q4).
 
 _Implementation:_ I recommend you head on over to the code, read the comments, and try to fill in the functions. Once you complete it, come back here and read the remaining notes, adjusting your code as needed.
 
