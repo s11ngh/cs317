@@ -318,7 +318,7 @@ Pacman fails to win on larger layouts because each board configuration is a sepa
 
 Implement an approximate Q-learning agent that learns weights for features of states, where many states might share the same features. Write your implementation in `ApproximateQAgent` class in `qlearningAgents.py`, which is a subclass of `PacmanQAgent`.
 
-_Note:_ Approximate Q-learning assumes the existence of a feature function $\large f(s,a)$ over state and action pairs, which yields a vector $\large f_1(s,a), ..., f_i(s,a)..., f_n(s,a)$ of feature values. We provide feature functions for you in `featureExtractors.py`. Feature vectors are `util.Counter` (like a dictionary) objects containing the non-zero pairs of features and values; all omitted features have value zero.
+Approximate Q-learning assumes the existence of a feature function $\large f(s,a)$ over state and action pairs, which yields a vector $\large f_1(s,a), ..., f_i(s,a)..., f_n(s,a)$ of feature values. We provide feature functions for you in `featureExtractors.py`: use its `getFeatures(state,action)` to obtain a feature vector, `util.Counter` (like a dictionary, where keys=features, values=feature_values), containing the non-zero pairs of features and values; all omitted features have value zero.
 
 The approximate Q-function takes the following form:
 
