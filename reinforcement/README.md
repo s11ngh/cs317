@@ -222,11 +222,13 @@ _Grading:_ We will check that the desired policy is returned in each case.
 
 Note that your value iteration agent does not actually learn from experience. Rather, it ponders its MDP model to arrive at a complete policy before ever interacting with a real environment. When it does interact with the environment, it simply follows the precomputed policy (e.g. it becomes a reflex agent). This distinction may be subtle in a simulated environment like a Gridword, but it’s very important in the real world, where the real MDP is not available.
 
-You will now write a Q-learning agent, which does very little on construction, but instead learns by trial and error from interactions with the environment through its `update(state, action, nextState, reward)` method. A stub of a Q-learner is specified in `QLearningAgent` in `qlearningAgents.py`, and you can select it with the option `'-a q'`. For this question, you must implement the `update`, `computeValueFromQValues`, `getQValue`, and `computeActionFromQValues` methods.
+You will now write a Q-learning agent, which does very little on construction, but instead learns by trial and error from interactions with the environment through its `update(state, action, nextState, reward)` method. A stub of a Q-learner is specified in `QLearningAgent` in `qlearningAgents.py`, and you can select it with the option `-a q`. For this question, you must implement the `update`, `computeValueFromQValues`, `getQValue`, and `computeActionFromQValues` methods (completing `getAction` is Q4).
+
+_Implementation:_ I recommend you head on over to the code, read the comments, and try to fill in the functions. Once you complete it, come back here and read the remaining notes, adjusting your code as needed.
 
 _Note:_ For `computeActionFromQValues`, you should break ties randomly for better behavior. The `random.choice()` function will help. In a particular state, actions that your agent _hasn't_ seen before still have a Q-value, specifically a Q-value of zero, and if all of the actions that your agent _has_ seen before have a negative Q-value, an unseen action may be optimal.
 
-_Important:_ Make sure that in your `computeValueFromQValues` and `computeActionFromQValues` functions, you only access Q values by calling `getQValue`. This abstraction will be useful for question 10 when you override getQValue to use features of state-action pairs rather than state-action pairs directly.
+_Important:_ Make sure that in your `update, `computeValueFromQValues`, and `computeActionFromQValues` functions, you only access Q values by calling `getQValue`. This abstraction will be useful for question 10 when you override getQValue to use features of state-action pairs rather than state-action pairs directly.
 
 With the Q-learning update in place, you can watch your Q-learner learn under manual control, using the keyboard:
 
@@ -294,7 +296,7 @@ _Note:_ While a total of 2010 games will be played, the first 2000 games will no
 
 _Note:_ If you want to watch 10 training games to see what's going on, use the command:
 
-    python pacman.py -p PacmanQAgent -n 10 -l smallGrid -a numTraining=10`
+    python pacman.py -p PacmanQAgent -n 10 -l smallGrid -a numTraining=10
 
 During training, you will see output every 100 games with statistics about how Pacman is faring. Epsilon is positive during training, so Pacman will play poorly even after having learned a good policy: this is because he occasionally makes a random exploratory move into a ghost. As a benchmark, it should take between 1000 and 1400 games before Pacman’s rewards for a 100 episode segment becomes positive, reflecting that he’s started winning more than losing. By the end of training, it should remain positive and be fairly high (between 100 and 350).
 
