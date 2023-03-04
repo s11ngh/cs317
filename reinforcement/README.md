@@ -3,7 +3,7 @@ Berkeley AI Materials
 Project 3: Reinforcement Learning
 ---------------------------------
 
-Version 1.001. Last Updated: 08/26/2014.
+Version 1.004. Last Updated by Berkeley: Fall 2022 (notes from Kazakova in Winter 2023)
 
 * * *
 
